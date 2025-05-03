@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Filmes por Gênero</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <header>
+    <div class="logo"></div>
+    <nav>
+      <a href="../index.html">Início</a>
+      <a href="filmesporgenero.html" class="active">Filmes Por Gênero</a>
+      <a href="#">Melhores Avaliados</a>
+    </nav>
+    <div class="user-icon"></div>
+  </header>
+
+  <div class="search-bar">
+    <input type="text" id="busca-genero" placeholder="Pesquisar gênero...">
+    <button onclick="buscarPorGenero()">🔍</button>
+  </div>
+
+  <section id="genero-acao">
+    <div class="genero-header">
+      <span class="toggle-btn" onclick="toggleGenero('genero-acao')">🢓</span>
+      <h2>Filmes de Ação</h2>
+    </div>
+    <div class="grid" id="grid-acao"></div>
+  </section>
+
+  <section id="genero-romance">
+    <div class="genero-header">
+      <span class="toggle-btn" onclick="toggleGenero('genero-romance')">🢓</span>
+      <h2>Filmes de Romance</h2>
+    </div>
+    <div class="grid" id="grid-romance"></div>
+  </section>
+
+  <section id="genero-comedia">
+    <div class="genero-header">
+      <span class="toggle-btn" onclick="toggleGenero('genero-comedia')">🢓</span>
+      <h2>Filmes de Comédia</h2>
+    </div>
+    <div class="grid" id="grid-comedia"></div>
+  </section>
+
+  <section id="genero-thriller">
+    <div class="genero-header">
+      <span class="toggle-btn" onclick="toggleGenero('genero-thriller')">🢓</span>
+      <h2>Filmes de Suspense</h2>
+    </div>
+    <div class="grid" id="grid-thriller"></div>
+  </section>
+
+  <section id="genero-drama">
+    <div class="genero-header">
+      <span class="toggle-btn" onclick="toggleGenero('genero-drama')">🢓</span>
+      <h2>Filmes de Drama</h2>
+    </div>
+    <div class="grid" id="grid-drama"></div>
+  </section>
+
+  <section id="genero-aventura">
+    <div class="genero-header">
+      <span class="toggle-btn" onclick="toggleGenero('genero-aventura')">🢓</span>
+      <h2>Filmes de Aventura</h2>
+    </div>
+    <div class="grid" id="grid-aventura"></div>
+  </section>
+
+  <section id="genero-animacao">
+    <div class="genero-header">
+      <span class="toggle-btn" onclick="toggleGenero('genero-animacao')">🢓</span>
+      <h2>Filmes de Animação</h2>
+    </div>
+    <div class="grid" id="grid-animacao"></div>
+  </section>
+
+  <section id="genero-crime">
+    <div class="genero-header">
+      <span class="toggle-btn" onclick="toggleGenero('genero-crime')">🢓</span>
+      <h2>Filmes de Crime</h2>
+    </div>
+    <div class="grid" id="grid-crime"></div>
+  </section>
+
+  <section id="genero-documentario">
+    <div class="genero-header">
+      <span class="toggle-btn" onclick="toggleGenero('genero-documentario')">🢓</span>
+      <h2>Documentários</h2>
+    </div>
+    <div class="grid" id="grid-documentario"></div>
+  </section>
+
+  <script src="../js/genero.js"></script>
+</body>
+</html>

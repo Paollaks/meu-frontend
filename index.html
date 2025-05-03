@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Busca Filmes</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header>
+    <div class="logo"></div>
+    <nav>
+      <a href="#" class="active">Início</a>
+      <a href="pages/filmesporgenero.html">Filmes Por Gênero</a>
+      <a href="#">Melhores Avaliados</a>
+    </nav>
+    <div class="user-icon"></div>
+  </header>
+
+  <div class="search-bar">
+    <input type="text" id="busca" placeholder="Pesquisar filmes...">
+    <button onclick="buscarFilmes()">🔍</button>
+  </div>
+
+  <div class="grid" id="grid-filmes">
+    <!-- Os filmes serão inseridos aqui -->
+  </div>
+
+
+
+  <script src="js/main.js"></script>
+</body>
+</html>
