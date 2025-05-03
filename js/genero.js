@@ -60,7 +60,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   }
   
-  // 🔁 Novo: alternar visibilidade (abrir/fechar) da seção
   function toggleGenero(id) {
     const section = document.getElementById(id);
     const grid = section.querySelector('.grid');
@@ -68,14 +67,13 @@ document.addEventListener("DOMContentLoaded", () => {
   
     if (grid.style.display === "none") {
       grid.style.display = "flex";
-      btn.textContent = "🢓"; // ícone de aberto
+      btn.textContent = "🢓";
     } else {
       grid.style.display = "none";
-      btn.textContent = "🢒"; // ícone de fechado
+      btn.textContent = "🢒";
     }
   }
   
-  // 🔍 Novo: busca por nome do gênero
   function buscarPorGenero() {
     const termo = document.getElementById('busca-genero').value.toLowerCase();
     const secoes = document.querySelectorAll('section[id^="genero-"]');
@@ -85,7 +83,6 @@ document.addEventListener("DOMContentLoaded", () => {
       secao.style.display = titulo.includes(termo) || termo === "" ? "block" : "none";
     });
 
-    // Permitir que Enter faça a busca no input de gênero
 document.getElementById('busca-genero').addEventListener('keydown', function (e) {
     if (e.key === 'Enter') {
       buscarPorGenero();

@@ -1,6 +1,6 @@
 const grid = document.getElementById('grid-filmes');
 
-// Executa automaticamente quando a página é carregada
+
 window.onload = buscarFilmes;
 
 function buscarFilmes() {
@@ -21,7 +21,6 @@ function buscarFilmes() {
     .then(dados => {
       console.log("Resposta da API (home):", dados);
 
-      // Tenta acessar filmes direto, ou em .value, ou .$values
       const filmes =
         Array.isArray(dados) ? dados :
         Array.isArray(dados.$values) ? dados.$values :
