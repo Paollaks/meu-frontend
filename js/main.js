@@ -1,6 +1,5 @@
 const grid = document.getElementById('grid-filmes');
 
-
 window.onload = buscarFilmes;
 
 function buscarFilmes() {
@@ -19,8 +18,6 @@ function buscarFilmes() {
       return res.json();
     })
     .then(dados => {
-      console.log("Resposta da API (home):", dados);
-
       const filmes =
         Array.isArray(dados) ? dados :
         Array.isArray(dados.$values) ? dados.$values :
@@ -43,9 +40,12 @@ function buscarFilmes() {
       filmes.forEach(filme => {
         const div = document.createElement('div');
         div.className = 'filme';
+        div.onclick = () => abrirModal(filme);
 
         const img = document.createElement('img');
-        img.src = filme.fotoUrl || 'https://via.placeholder.com/140x200';
+        img.src = filme.fotoUrl && filme.fotoUrl.includes('/t/p/')
+          ? filme.fotoUrl
+          : 'https://via.placeholder.com/140x200';
         img.alt = filme.titulo;
 
         div.appendChild(img);
@@ -57,3 +57,34 @@ function buscarFilmes() {
       grid.innerHTML = '<p>Erro ao carregar filmes.</p>';
     });
 }
+
+// 🔽 Modal - funções no final do arquivo
+function abrirModal(filme) {
+  document.getElementById('modal-img').src = filme.fotoUrl && filme.fotoUrl.includes('/t/p/')
+    ? filme.fotoUrl
+    : 'https://via.placeholder.com/250x350';
+  document.getElementById('modal-titulo').textContent = filme.titulo;
+  document.getElementById('modal-ano').textContent = filme.anoLancamento;
+  document.getElementById('modal-genero').textContent = filme.genero;
+  document.getElementById('modal-sinopse').textContent = filme.sinopse;
+  document.getElementById('modal-nota').textContent = filme.notaMedia?.toFixed(1) || 'N/A';
+  document.getElementById('modal-estrelas').innerHTML = gerarEstrelas(filme.notaMedia);
+
+  document.getElementById('modal-filme').style.display = 'block';
+}
+
+function fecharModal() {
+  document.getElementById('modal-filme').style.display = 'none';
+}
+
+function gerarEstrelas(nota) {
+  if (!nota) return '';
+  const estrelasCheias = Math.round(nota / 2);
+  return Array.from({ length: 5 }, (_, i) => i < estrelasCheias ? '★' : '☆').join('');
+}
+
+document.getElementById('busca').addEventListener('keydown', function (e) {
+  if (e.key === 'Enter') {
+    buscarFilmes();
+  }
+});
