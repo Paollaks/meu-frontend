@@ -1,0 +1,152 @@
+body {
+  background-color: #476f71;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px;
+}
+
+.container {
+  background-color: #1a1e21;
+  padding: 30px 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+}
+
+.form-box {
+  padding: 10px 20px;
+}
+
+.form-box h2 {
+  color: #ffffff;
+  text-align: center;
+  margin-top: 0;         /* <-- Aqui está o ajuste - ajudou de nada, rever depois */
+  margin-bottom: 15px;
+  font-size: 35px;
+  font-weight: 600;
+}
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+.form-box label {
+  display: block;
+  margin-bottom: 12px;
+  color: #fff;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+/* Campos de input padrão (largura total) */
+.form-box input[type="text"],
+.form-box input[type="email"],
+.form-box input[type="password"] {
+  width: 100%;
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background-color: #fcd3b5;
+  color: #1a1e21;
+  transition: all 0.3s;
+  font-size: 15px;
+  box-sizing: border-box;
+}
+
+/* Container para os campos lado a lado */
+.row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+/* Campos dentro do .row (Senha e Nome de Usuário) */
+.row .form-group {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.row .form-group input {
+  width: 100%;
+}
+
+.form-box input:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+  outline: none;
+  background-color: #fff;
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.2);
+  margin: 35px 0;
+  width: 100%;
+}
+
+.form-box button {
+  width: 100%;
+  padding: 14px;
+  background-color: #476f71;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.3s;
+  margin-top: 20px;
+}
+
+.form-box button:hover {
+  background: #3a5d5f;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.footer {
+  text-align: center;
+  margin-top: 30px;
+  color: #a8b2b3;
+  font-size: 14px;
+}
+
+.footer a {
+  color: #4da6ff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.form-box input:invalid {
+  border-color: #e74c3c;
+}
+
+.form-box input:invalid:focus {
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 40px 25px;
+  }
+  
+  .row {
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .form-box {
+    padding: 15px 20px;
+  }
+}
