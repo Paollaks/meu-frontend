@@ -191,8 +191,7 @@ nav a:hover, nav a.active {
 /* Ícone de perfil com menu suspenso */
 .user-menu {
   position: relative;
-  display: flex;
-  align-items: center;
+  display: inline-block;
 }
 
 .user-icon {
@@ -204,7 +203,6 @@ nav a:hover, nav a.active {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  z-index: 2;
 }
 
 .user-icon img {
@@ -215,29 +213,23 @@ nav a:hover, nav a.active {
 .user-dropdown {
   display: none;
   position: absolute;
-  top: 50px;
+  top: 100%;
   right: 0;
   background-color: #1F1F1F;
-  border-radius: 6px;
-  padding: 10px 0;
-  min-width: 160px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1;
+  padding: 20px 30px;
+  border-radius: 10px;
+  z-index: 10;
+  min-width: 100px;
 }
 
 .user-dropdown a {
   display: block;
-  padding: 10px 20px;
   color: #bb5050;
   text-decoration: none;
+  margin: 12px 0;
   font-size: 18px;
-  font-family: serif;
 }
 
 .user-dropdown a:hover {
   text-decoration: underline;
-}
-
-.user-menu:hover .user-dropdown {
-  display: block;
 }

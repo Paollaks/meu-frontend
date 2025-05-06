@@ -114,3 +114,17 @@ function gerarEstrelas(nota) {
   const estrelasCheias = Math.round(nota / 2);
   return Array.from({ length: 5 }, (_, i) => i < estrelasCheias ? '★' : '☆').join('');
 }
+function toggleMenu() {
+  const menu = document.getElementById("dropdown-menu");
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
+
+// Fecha o menu se clicar fora
+document.addEventListener("click", function(event) {
+  const userMenu = document.querySelector(".user-menu");
+  const dropdown = document.getElementById("dropdown-menu");
+
+  if (!userMenu.contains(event.target)) {
+    dropdown.style.display = "none";
+  }
+});
