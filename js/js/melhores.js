@@ -1,22 +1,38 @@
-// Lista de filmes fictícios
+// Lista de filmes com notas (pode ser uma API ou banco de dados mais tarde)
 const filmes = [
-    { titulo: "A Origem", nota: 9.3 },
-    { titulo: "O Poderoso Chefão", nota: 9.2 },
-    { titulo: "Vingadores: Ultimato", nota: 8.9 },
-    { titulo: "Avatar", nota: 8.2 },
-    { titulo: "Coringa", nota: 9.0 }
-  ];
+  { titulo: "Filme A", nota: 9.2, imagem: "link-da-imagem-a.jpg" },
+  { titulo: "Filme B", nota: 8.5, imagem: "link-da-imagem-b.jpg" },
+  { titulo: "Filme C", nota: 9.8, imagem: "link-da-imagem-c.jpg" },
+  // Adicione mais filmes aqui
+];
+
+function exibirFilmes() {
+  const grid = document.getElementById("grid-melhores");
+  grid.innerHTML = ""; // Limpa a lista de filmes antes de exibir
+
   
-  // Ordena por nota (maior para menor)
-  const melhores = filmes.sort((a, b) => b.nota - a.nota).slice(0, 5);
-  
-  const container = document.getElementById("top-filmes");
-  
-  // Adiciona na tela
-  melhores.forEach(filme => {
-    const card = document.createElement("div");
-    card.className = "filme-card";
-    card.innerHTML = `<h3>${filme.titulo}</h3><p>Nota: ${filme.nota}</p>`;
-    container.appendChild(card);
+  const filmesOrdenados = filmes.sort((a, b) => b.nota - a.nota);
+
+  filmesOrdenados.forEach(filme => {
+    const filmeDiv = document.createElement("div");
+    filmeDiv.classList.add("filme");
+
+    filmeDiv.innerHTML = `
+      <img src="${filme.imagem}" alt="${filme.titulo}">
+      <div class="info-filme">
+        <h3>${filme.titulo}</h3>
+        <p>Nota: ${filme.nota}</p>
+        <button onclick="abrirModal('${filme.titulo}')">Ver Detalhes</button>
+      </div>
+    `;
+    grid.appendChild(filmeDiv);
   });
-  
+}
+
+function abrirModal(titulo) {
+  const filme = filmes.find(f => f.titulo === titulo);
+  alert(`Detalhes do filme: ${filme.titulo} - Nota: ${filme.nota}`);
+}
+
+
+window.onload = exibirFilmes;
