@@ -88,3 +88,18 @@ document.getElementById('busca').addEventListener('keydown', function (e) {
     buscarFilmes();
   }
 });
+
+function toggleMenu() {
+  const menu = document.getElementById("dropdown-menu");
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
+
+// Fecha o menu se clicar fora
+document.addEventListener("click", function(event) {
+  const userMenu = document.querySelector(".user-menu");
+  const dropdown = document.getElementById("dropdown-menu");
+
+  if (!userMenu.contains(event.target)) {
+    dropdown.style.display = "none";
+  }
+});
