@@ -1,24 +1,49 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="index">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
   <title>Melhores Avaliados</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="../css/style.css">
 </head>
-<body class="index">
-  <header>
-    <h1>Melhores Avaliados</h1>
-    <nav>
-      <a href="index.html">Início</a>
-      <a href="genero.html">Por Gênero</a>
-      <a href="html.melhores">Melhores</a>
-      <a href="gestao.html">Gestão</a>
-    </nav>
-  </header>
-  <div class="grid" id="top-filmes"></div>
+<body>
 
-  <script src="melhores.js"></script>
+  <header>
+    <div class="logo"></div>
+    <nav>
+      <a href="../index.html">Início</a>
+      <a href="filmesporgenero.html">Filmes Por Gênero</a>
+      <a href="html.melhores" class="active">Melhores Avaliados</a>
+    </nav>
+    <div class="user-menu">
+      <div class="user-icon">
+        <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="Perfil">
+        <div class="user-dropdown">
+          <a href="#">Perfil</a>
+          <a href="#">Avaliações</a>
+          <a href="#">Favoritados</a>
+          <a href="#">Desconectar</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="search-bar">
+    <input type="text" id="busca-filme" placeholder="Pesquisar filme...">
+    <button onclick="buscarMelhores()" class="lupa-btn">
+      <svg class="icon-lupa" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path fill="white" d="M10 2a8 8 0 105.293 14.293l4.707 4.707 1.414-1.414-4.707-4.707A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Seção de Melhores Avaliados -->
+  <section id="melhores-filmes">
+    <div class="genero-header">
+      <h2>Melhores Avaliados</h2>
+    </div>
+    <div class="grid" id="grid-melhores"></div>
+  </section>
+
+  <script src="../js/melhores.js"></script>
 </body>
 </html>
-
