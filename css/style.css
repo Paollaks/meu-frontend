@@ -240,4 +240,12 @@ nav a:hover, nav a.active {
 
 .user-menu:hover .user-dropdown {
   display: block;
-}
+  
+  .filme-card {
+    background-color: #1F1F1F;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    color: white;
+  }
+  
