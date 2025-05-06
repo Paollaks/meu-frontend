@@ -12,13 +12,13 @@
     <nav>
       <a href="index.html">Início</a>
       <a href="genero.html">Por Gênero</a>
-      <a href="melhores.html">Melhores</a>
+      <a href="html.melhores">Melhores</a>
       <a href="gestao.html">Gestão</a>
     </nav>
   </header>
-
   <div class="grid" id="top-filmes"></div>
 
-  <script src="js/melhores.js"></script>
+  <script src="melhores.js"></script>
 </body>
 </html>
+
