@@ -1,3 +1,4 @@
+/* Resetando margens e definindo a fonte */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -5,13 +6,13 @@ body {
   color: white;
 }
 
+/* Layout de grid para filmes */
 body.index .grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 20px;
   padding: 0 20px 40px;
 }
-
 
 /* Cabeçalho */
 header {
@@ -22,12 +23,14 @@ header {
   align-items: center;
 }
 
+/* Navegação */
 nav {
   display: flex;
   gap: 30px;
   align-items: center;
 }
 
+/* Estilo dos links de navegação */
 nav a {
   color: #bb5050;
   text-decoration: none;
@@ -70,6 +73,7 @@ nav a:hover, nav a.active {
   height: 20px;
   fill: white;
 }
+
 /* Grid de filmes */
 .grid {
   display: grid;
@@ -77,7 +81,6 @@ nav a:hover, nav a.active {
   gap: 20px;
   padding: 0 20px 40px;
 }
-
 
 .filme {
   background-color: #ccc;
@@ -96,22 +99,12 @@ nav a:hover, nav a.active {
   background-color: #222;
 }
 
-
 .filme:hover {
   transform: scale(1.05);
   z-index: 2;
 }
 
-.filme img {
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  display: block;
-  aspect-ratio: 2 / 3;
-  background-color: #222;
-}
-
-
+/* Cabeçalho do gênero */
 .genero-header {
   background-color: #1f1f1f;
   color: #f4d7a1;
@@ -188,6 +181,7 @@ nav a:hover, nav a.active {
   color: #333;
   cursor: pointer;
 }
+
 /* Ícone de perfil com menu suspenso */
 .user-menu {
   position: relative;
@@ -233,3 +227,19 @@ nav a:hover, nav a.active {
 .user-dropdown a:hover {
   text-decoration: underline;
 }
+<<<<<<< HEAD
+
+.user-menu:hover .user-dropdown {
+  display: block;
+}
+
+/* Estilo geral para o filme card */
+.filme-card {
+  background-color: #1F1F1F;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  color: white;
+}
+=======
+>>>>>>> fd5a9430eb4617171adce29b79e3f5b23ba48c8a
