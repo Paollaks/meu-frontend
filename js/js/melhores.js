@@ -1,38 +1,79 @@
-// Lista de filmes com notas (pode ser uma API ou banco de dados mais tarde)
-const filmes = [
-  { titulo: "Filme A", nota: 9.2, imagem: "link-da-imagem-a.jpg" },
-  { titulo: "Filme B", nota: 8.5, imagem: "link-da-imagem-b.jpg" },
-  { titulo: "Filme C", nota: 9.8, imagem: "link-da-imagem-c.jpg" },
-  // Adicione mais filmes aqui
-];
+// Função para carregar os filmes melhores avaliados
+async function carregarMelhoresAvaliados() {
+  try {
+    const resposta = await fetch('https://sua-api.com/filmes/melhores-avaliados');
+    const filmes = await resposta.json();
 
-function exibirFilmes() {
-  const grid = document.getElementById("grid-melhores");
-  grid.innerHTML = ""; // Limpa a lista de filmes antes de exibir
+    const container = document.getElementById('melhores-avaliados');
+    container.innerHTML = ''; // Limpa antes de carregar os filmes
 
-  
-  const filmesOrdenados = filmes.sort((a, b) => b.nota - a.nota);
+    filmes.forEach(filme => {
+      const card = document.createElement('div');
+      card.className = 'filme-card';
 
-  filmesOrdenados.forEach(filme => {
-    const filmeDiv = document.createElement("div");
-    filmeDiv.classList.add("filme");
+      // Definindo a cor de fundo com base na nota
+      let corFundo;
+      if (filme.notaMedia >= 8) {
+        corFundo = '#28a745'; // verde para boas notas
+      } else if (filme.notaMedia >= 5) {
+        corFundo = '#ffc107'; // amarelo para notas médias
+      } else {
+        corFundo = '#dc3545'; // vermelho para notas baixas
+      }
 
-    filmeDiv.innerHTML = `
-      <img src="${filme.imagem}" alt="${filme.titulo}">
-      <div class="info-filme">
+      card.style.backgroundColor = corFundo;
+
+      card.innerHTML = `
+        <img src="${filme.fotoUrl || 'https://via.placeholder.com/150x220'}" alt="${filme.titulo}">
         <h3>${filme.titulo}</h3>
-        <p>Nota: ${filme.nota}</p>
-        <button onclick="abrirModal('${filme.titulo}')">Ver Detalhes</button>
-      </div>
-    `;
-    grid.appendChild(filmeDiv);
-  });
+        <p>Nota: ${filme.notaMedia?.toFixed(1) || 'N/A'}</p>
+      `;
+      
+      // Adiciona evento de clique no card para abrir o modal
+      card.addEventListener('click', () => abrirModal(filme));
+      
+      // Adiciona o card ao container
+      container.appendChild(card);
+    });
+
+  } catch (erro) {
+    console.error("Erro ao carregar melhores avaliados:", erro);
+  }
 }
 
-function abrirModal(titulo) {
-  const filme = filmes.find(f => f.titulo === titulo);
-  alert(`Detalhes do filme: ${filme.titulo} - Nota: ${filme.nota}`);
+// Função para abrir o modal e preencher com os detalhes do filme
+function abrirModal(filme) {
+  document.getElementById('modal-img').src = filme.fotoUrl || 'https://via.placeholder.com/250x350';
+  document.getElementById('modal-titulo').textContent = filme.titulo;
+  document.getElementById('modal-ano').textContent = `Ano de lançamento: ${filme.anoLancamento}`;
+  document.getElementById('modal-genero').textContent = `Gênero: ${filme.genero}`;
+  document.getElementById('modal-sinopse').textContent = `Sinopse: ${filme.sinopse}`;
+  document.getElementById('modal-nota').textContent = `Nota média: ${filme.notaMedia?.toFixed(1) || 'N/A'}`;
+  document.getElementById('modal-estrelas').innerHTML = gerarEstrelas(filme.notaMedia);
+
+  // Exibe o modal
+  document.getElementById('modal-filme').style.display = 'block';
 }
 
+// Função para gerar as estrelas com base na nota
+function gerarEstrelas(nota) {
+  if (!nota) return '';
+  const estrelasCheias = Math.round(nota / 2);
+  return Array.from({ length: 5 }, (_, i) => i < estrelasCheias ? '★' : '☆').join('');
+}
 
-window.onload = exibirFilmes;
+// Fechar o modal ao clicar no 'x'
+document.getElementById('modal-fechar').addEventListener('click', function() {
+  document.getElementById('modal-filme').style.display = 'none';
+});
+
+// Fechar o modal ao clicar fora da área do modal
+window.addEventListener('click', function(event) {
+  const modal = document.getElementById('modal-filme');
+  if (event.target === modal) {
+    modal.style.display = 'none';
+  }
+});
+
+// Chama automaticamente ao carregar a página
+window.addEventListener('DOMContentLoaded', carregarMelhoresAvaliados);
