@@ -20,9 +20,9 @@ function buscarFilmes() {
     .then(dados => {
       const filmes =
         Array.isArray(dados) ? dados :
-        Array.isArray(dados.$values) ? dados.$values :
-        Array.isArray(dados.value) ? dados.value :
-        null;
+          Array.isArray(dados.$values) ? dados.$values :
+            Array.isArray(dados.value) ? dados.value :
+              null;
 
       if (!Array.isArray(filmes)) {
         grid.innerHTML = '<p>Erro: formato de resposta inválido.</p>';
@@ -70,6 +70,30 @@ function abrirModal(filme) {
   document.getElementById('modal-nota').textContent = filme.notaMedia?.toFixed(1) || 'N/A';
   document.getElementById('modal-estrelas').innerHTML = gerarEstrelas(filme.notaMedia);
 
+  // Fazendo a requisição para o método GetAll da API
+  const url = `https://localhost:7252/api/Comentarios/GetAll?idFilme={filme.id}`; // Aqui usamos filme.id
+  fetch(url)
+    .then(res => {
+      if (!res.ok) {
+        throw new Error(`Erro ao carregar comentários: ${res.status}`);
+      }
+      return res.json();
+    })
+    .then(comentarios => {
+      const comentariosContainer = document.getElementById('modal-comentarios');
+      if (Array.isArray(comentarios) && comentarios.length > 0) {
+        comentariosContainer.innerHTML = comentarios
+          .map(comentario => `<p>${comentario.texto}</p>`)
+          .join('');
+      } else {
+        comentariosContainer.innerHTML = '<p>Sem comentários disponíveis.</p>';
+      }
+    })
+    .catch(err => {
+      console.error('Erro ao carregar comentários:', err);
+      document.getElementById('modal-comentarios').innerHTML = '<p>Erro ao carregar comentários.</p>';
+    });
+
   document.getElementById('modal-filme').style.display = 'block';
 }
 
@@ -95,7 +119,7 @@ function toggleMenu() {
 }
 
 // Fecha o menu se clicar fora
-document.addEventListener("click", function(event) {
+document.addEventListener("click", function (event) {
   const userMenu = document.querySelector(".user-menu");
   const dropdown = document.getElementById("dropdown-menu");
 
