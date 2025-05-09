@@ -6,19 +6,11 @@ const filmes = [
   // Adicione mais filmes aqui
 ];
 
-async function buscarFilmes() {
-  const resposta = await fetch('ttps://localhost:7252/api/avaliacoes/top-rated');
-  if (!resposta.ok) {
-    throw new Error(`Erro na API: ${resposta.status} - ${resposta.statusText}`);
-  }
-  const dados = await resposta.json();
-  return dados;
-}
-
 function exibirFilmes() {
   const grid = document.getElementById("grid-melhores");
   grid.innerHTML = ""; // Limpa a lista de filmes antes de exibir
 
+  
   const filmesOrdenados = filmes.sort((a, b) => b.nota - a.nota);
 
   filmesOrdenados.forEach(filme => {
@@ -42,36 +34,5 @@ function abrirModal(titulo) {
   alert(`Detalhes do filme: ${filme.titulo} - Nota: ${filme.nota}`);
 }
 
-function criarCardFilme(filme) {
-  const card = document.createElement('div');
-  card.className = 'filme-card';
-  card.innerHTML = `
-    <img src="${filme.fotoUrl || 'https://via.placeholder.com/150x220'}" alt="${filme.titulo}">
-    <h3>${filme.titulo}</h3>
-    <p>Nota: ${filme.notaMedia?.toFixed(1) || 'N/A'}</p>
-  `;
-  card.addEventListener('click', () => abrirModal(filme));
-  return card;
-}
 
-window.onload = async () => {
-  try {
-    const filmesDaApi = await buscarFilmes();
-    // Aqui você pode fazer algo com os filmes retornados pela API, se necessário
-    exibirFilmes();
-  } catch (erro) {
-    console.error(erro);
-    alert("Ocorreu um erro ao buscar os filmes.");
-  }
-
-  const container = document.getElementById('melhoresavaliados');
-  if (!container) {
-    console.error("Elemento #melhoresavaliados não encontrado.");
-    return;
-  }
-
-  filmes.forEach(filme => {
-    const card = criarCardFilme(filme);
-    container.appendChild(card);
-  });
-};
+window.onload = exibirFilmes;
