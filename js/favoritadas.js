@@ -10,13 +10,13 @@ function buscarFilmes() {
         url += `?termo=${encodeURIComponent(termo)}`;
     }
 
-    fetch(url)
-        .then(res => {
-            if (!res.ok) {
-                throw new Error(`Erro na resposta: ${res.status}`);
-            }
-            return res.json();
-        })
+  fetchComToken(url, { method: 'GET' })
+    .then(res => {
+      if (!res.ok) {
+        throw new Error(`Erro na resposta: ${res.status}`);
+      }
+      return res.json();
+    })
         .then(dados => {
             const filmes =
                 Array.isArray(dados) ? dados :
@@ -164,3 +164,16 @@ document.addEventListener("click", function (event) {
         dropdown.style.display = "none";
     }
 });
+
+function fetchComToken(url, options = {}) {
+  const jwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Ikx1YW5hTGF1cmEiLCJuYW1laWQiOiIxIiwibmJmIjoxNzQ2ODk3NTYwLCJleHAiOjE3NDY5MDQ3NjAsImlhdCI6MTc0Njg5NzU2MH0.w1AvBtMvwuEIRv3OPKYdf7V0MN3LvFC4iHzjdip8Ex4";
+
+  // Adiciona o cabeçalho Authorization com o token
+  const headers = {
+    'Authorization': `Bearer ${jwtToken}`,
+    'Content-Type': 'application/json',
+    ...options.headers, // Permite sobrescrever ou adicionar outros cabeçalhos
+  };
+
+  return fetch(url, { ...options, headers });
+}
