@@ -38,4 +38,5 @@ function buscarFilmes() {
       filmes.forEach(filme => {
         const div = document.createElement('div');
         div.className = 'filme-card';
-        di
+        div.textContent = filme.titulo || 'Título não disponível';
+        grid.appendChild(div);
