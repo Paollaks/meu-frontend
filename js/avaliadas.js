@@ -1,9 +1,9 @@
-const grid = document.getElementById('grid-filmes');
+const grid = document.getElementById('grid-melhores');
 
 window.onload = buscarFilmes;
 
 function buscarFilmes() {
-  const termo = document.getElementById('busca')?.value || "";
+  const termo = document.getElementById('busca-filme')?.value || "";
   let url = 'https://localhost:7252/api/Comentarios/usuario/1/filmes';
 
   if (termo.trim() !== "") {
@@ -12,9 +12,7 @@ function buscarFilmes() {
 
   fetch(url)
     .then(res => {
-      if (!res.ok) {
-        throw new Error(`Erro na resposta: ${res.status}`);
-      }
+      if (!res.ok) throw new Error(`Erro na resposta: ${res.status}`);
       return res.json();
     })
     .then(dados => {
@@ -23,6 +21,7 @@ function buscarFilmes() {
           Array.isArray(dados.$values) ? dados.$values :
             Array.isArray(dados.value) ? dados.value :
               null;
+    })
 
       if (!Array.isArray(filmes)) {
         grid.innerHTML = '<p>Erro: formato de resposta inválido.</p>';
@@ -39,91 +38,8 @@ function buscarFilmes() {
 
       filmes.forEach(filme => {
         const div = document.createElement('div');
-        div.className = 'filme';
-        div.onclick = () => abrirModal(filme);
-
-        const img = document.createElement('img');
-        img.src = filme.fotoUrl && filme.fotoUrl.includes('/t/p/')
-          ? filme.fotoUrl
-          : 'https://via.placeholder.com/140x200';
-        img.alt = filme.titulo;
-
-        div.appendChild(img);
-        grid.appendChild(div);
-      });
+        div.className = 'filme-card';
+        di
+      
     })
-    .catch(err => {
-      console.error('Erro ao buscar filmes:', err);
-      grid.innerHTML = '<p>Erro ao carregar filmes.</p>';
-    });
-}
-
-// 🔽 Modal - funções no final do arquivo
-function abrirModal(filme) {
-  document.getElementById('modal-img').src = filme.fotoUrl && filme.fotoUrl.includes('/t/p/')
-    ? filme.fotoUrl
-    : 'https://via.placeholder.com/250x350';
-  document.getElementById('modal-titulo').textContent = filme.titulo;
-  document.getElementById('modal-ano').textContent = filme.anoLancamento;
-  document.getElementById('modal-genero').textContent = filme.genero;
-  document.getElementById('modal-sinopse').textContent = filme.sinopse;
-  document.getElementById('modal-nota').textContent = filme.notaMedia?.toFixed(1) || 'N/A';
-  document.getElementById('modal-estrelas').innerHTML = gerarEstrelas(filme.notaMedia);
-
-  // Fazendo a requisição para o método GetAll da API
-  const url = `https://localhost:7252/api/Comentarios/GetAll?idFilme=${filme.id}`; // Aqui usamos filme.id
-  fetch(url)
-    .then(res => {
-      if (!res.ok) {
-        throw new Error(`Erro ao carregar comentários: ${res.status}`);
-      }
-      return res.json();
-    })
-    .then(comentarios => {
-      const comentariosContainer = document.getElementById('modal-comentarios');
-      if (Array.isArray(comentarios) && comentarios.length > 0) {
-        comentariosContainer.innerHTML = comentarios
-          .map(comentario => `<p>${comentario.texto}</p>`)
-          .join('');
-      } else {
-        comentariosContainer.innerHTML = '<p>Sem comentários disponíveis.</p>';
-      }
-    })
-    .catch(err => {
-      console.error('Erro ao carregar comentários:', err);
-      document.getElementById('modal-comentarios').innerHTML = '<p>Erro ao carregar comentários.</p>';
-    });
-
-  document.getElementById('modal-filme').style.display = 'block';
-}
-
-function fecharModal() {
-  document.getElementById('modal-filme').style.display = 'none';
-}
-
-function gerarEstrelas(nota) {
-  if (!nota) return '';
-  const estrelasCheias = Math.round(nota / 2);
-  return Array.from({ length: 5 }, (_, i) => i < estrelasCheias ? '★' : '☆').join('');
-}
-
-document.getElementById('busca').addEventListener('keydown', function (e) {
-  if (e.key === 'Enter') {
-    buscarFilmes();
-  }
-});
-
-function toggleMenu() {
-  const menu = document.getElementById("dropdown-menu");
-  menu.style.display = menu.style.display === "block" ? "none" : "block";
-}
-
-// Fecha o menu se clicar fora
-document.addEventListener("click", function (event) {
-  const userMenu = document.querySelector(".user-menu");
-  const dropdown = document.getElementById("dropdown-menu");
-
-  if (!userMenu.contains(event.target)) {
-    dropdown.style.display = "none";
-  }
-});
+  }    

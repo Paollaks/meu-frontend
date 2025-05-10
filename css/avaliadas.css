@@ -1,105 +1,73 @@
-/* Modal de Detalhes do Filme */
+/* Estilos dos cards de filmes */
+.filme-card {
+  width: 150px;
+  margin: 10px;
+  padding: 15px;
+  text-align: center;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.filme-card:hover {
+  transform: scale(1.05);
+}
+
+.filme-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+/* Estilos do modal */
 .modal {
-  display: none;
+  display: none; /* Modal está escondido inicialmente */
   position: fixed;
-  z-index: 9999;
+  z-index: 1; /* Fica sobre os outros elementos */
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0, 0, 0, 0.7);
-  font-family: sans-serif;
+  background-color: rgba(0, 0, 0, 0.4); /* Fundo semitransparente */
 }
 
 .modal-content {
-  background-color: #f3cfa5;
-  margin: 5% auto;
+  background-color: #fff;
+  margin: 15% auto;
   padding: 20px;
-  border-radius: 8px;
+  border: 1px solid #888;
   width: 80%;
-  max-width: 900px;
+  max-width: 600px;
+  border-radius: 10px;
+  text-align: center;
 }
 
-.modal-body {
-  display: flex;
-  gap: 30px;
-  align-items: flex-start;
-  flex-wrap: wrap;
-}
-
-.modal-body img {
-  width: 250px;
+.modal-img {
+  max-width: 100%;
   height: auto;
-  background: #ccc;
-  border-radius: 4px;
+  border-radius: 8px;
 }
 
-.modal-info h2 {
-  margin-top: 0;
-  color: #1f1f1f;
-}
-
-.modal-info p {
-  color: #1f1f1f;
-  line-height: 1.4;
-}
-
-.estrelas {
-  color: orange;
-  font-size: 1.2em;
-  margin-left: 5px;
-}
-
-.close {
+.modal-fechar {
+  color: #aaa;
   float: right;
   font-size: 28px;
   font-weight: bold;
-  color: #333;
-  cursor: pointer;
-}
-/* Ícone de perfil com menu suspenso */
-.user-menu {
-  position: relative;
-  display: inline-block;
 }
 
-.user-icon {
-  background-color: #f4d7a1;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.user-icon img {
-  width: 22px;
-  height: 22px;
-}
-
-.user-dropdown {
-  display: none;
-  position: absolute;
-  top: 100%;
-  right: 0;
-  background-color: #1F1F1F;
-  padding: 20px 30px;
-  border-radius: 10px;
-  z-index: 10;
-  min-width: 100px;
-}
-
-.user-dropdown a {
-  display: block;
-  color: #bb5050;
+.modal-fechar:hover,
+.modal-fechar:focus {
+  color: black;
   text-decoration: none;
-  margin: 12px 0;
-  font-size: 18px;
+  cursor: pointer;
 }
 
-.user-dropdown a:hover {
-  text-decoration: underline;
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
+

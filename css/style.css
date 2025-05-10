@@ -227,7 +227,6 @@ nav a:hover, nav a.active {
 .user-dropdown a:hover {
   text-decoration: underline;
 }
-<<<<<<< HEAD
 
 .user-menu:hover .user-dropdown {
   display: block;
@@ -241,5 +240,3 @@ nav a:hover, nav a.active {
   text-align: center;
   color: white;
 }
-=======
->>>>>>> fd5a9430eb4617171adce29b79e3f5b23ba48c8a
