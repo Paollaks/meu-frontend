@@ -67,5 +67,6 @@ function abrirModal(titulo) {
     Gênero: ${filme.genero}
     Ano: ${filme.ano}
     Sinopse: ${filme.sinopse}
-  `);
+    `);
+  }
 
