@@ -126,17 +126,31 @@ function fecharModal() {
     document.getElementById('modal-filme').style.display = 'none';
 }
 
-const urlComentario = `https://localhost:7252/api/Comentarios`
-fetch(urlComentario)
-    .then(res => {
-        if (!res.ok) {
-            throw new Error(`Erro ao carregar comentários do filme: ${res.status}`);
-        }
-        return res.json();
-    })
-    .then(avaliacao => {
-        document.getElementById('modal-avaliacao').textContent = filme.comentario
-    })
+// Fazendo a requisição para o método GetAll da API
+const url = `https://localhost:7252/api/Comentarios?idUsuario=1`;
+fetchComToken(url, { method: 'GET' })
+   .then(res => {
+     if (!res.ok) {
+       throw new Error(`Erro ao carregar comentários: ${res.status}`);
+     }
+     return res.json();
+   })
+   .then(comentarios => {
+     const comentariosContainer = document.getElementById('modal-comentario');
+     if (Array.isArray(comentarios.$values) && comentarios.$values.length > 0) {
+       console.log(comentarios.$values);
+       comentariosContainer.innerHTML = comentarios.$values
+         .map(comentario => `<p>${comentario.comentario}</p>`)
+         .join('');
+     } else {
+       console.log(comentarios);
+       comentariosContainer.innerHTML = '<p>Sem comentários disponíveis.</p>';
+     }
+   })
+   .catch(err => {
+     console.error('Erro ao carregar comentários:', err);
+     document.getElementById('modal-comentario').innerHTML = '<p>Erro ao carregar comentários.</p>';
+   });
 
 function gerarEstrelas(nota) {
     if (!nota) return '';
@@ -166,7 +180,7 @@ document.addEventListener("click", function (event) {
 });
 
 function fetchComToken(url, options = {}) {
-  const jwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Ikx1YW5hTGF1cmEiLCJuYW1laWQiOiIxIiwibmJmIjoxNzQ2ODk3NTYwLCJleHAiOjE3NDY5MDQ3NjAsImlhdCI6MTc0Njg5NzU2MH0.w1AvBtMvwuEIRv3OPKYdf7V0MN3LvFC4iHzjdip8Ex4";
+  const jwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Ikx1YW5hTGF1cmEiLCJuYW1laWQiOiIxIiwibmJmIjoxNzQ2OTg3NTI1LCJleHAiOjE3NDY5OTQ3MjUsImlhdCI6MTc0Njk4NzUyNX0.K8VzoR7OPJfSC--4oTJmem2eh1CCC_VlHS1CvkqFtjs";
 
   // Adiciona o cabeçalho Authorization com o token
   const headers = {
