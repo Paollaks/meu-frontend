@@ -1,42 +1,15 @@
 const filmes = [
-  {
-    titulo: "Ação Implacável",
-    genero: "acao",
-    ano: 2022,
-    nota: 4.5,
-    imagem: "https://via.placeholder.com/150",
-    sinopse: "Um agente secreto precisa deter uma ameaça mundial."
-  },
-  {
-    titulo: "Amor em Paris",
-    genero: "romance",
-    ano: 2020,
-    nota: 4.2,
-    imagem: "https://via.placeholder.com/150",
-    sinopse: "Dois estranhos se encontram em Paris e vivem um romance inesquecível."
-  },
-  {
-    titulo: "No Escuro da Noite",
-    genero: "thriller",
-    ano: 2021,
-    nota: 4.6,
-    imagem: "https://via.placeholder.com/150",
-    sinopse: "Uma detetive investiga um desaparecimento misterioso."
-  },
-  {
-    titulo: "Piadas Infames",
-    genero: "comedia",
-    ano: 2019,
-    nota: 3.8,
-    imagem: "https://via.placeholder.com/150",
-    sinopse: "Uma sequência de situações engraçadas em uma escola desorganizada."
-  }
+  { titulo: "Filme A", nota: 9.2, imagem: "link-da-imagem-a.jpg" },
+  { titulo: "Filme B", nota: 8.5, imagem: "link-da-imagem-b.jpg" },
+  { titulo: "Filme C", nota: 9.8, imagem: "link-da-imagem-c.jpg" },
+  // Adicione mais filmes aqui
 ];
 
 function exibirFilmesMelhores() {
   const grid = document.getElementById("grid-melhores");
-  grid.innerHTML = "";
+  grid.innerHTML = ""; // Limpa a lista de filmes antes de exibir
 
+  
   const filmesOrdenados = filmes.sort((a, b) => b.nota - a.nota);
 
   filmesOrdenados.forEach(filme => {
@@ -59,7 +32,8 @@ function exibirFilmesMelhores() {
 
 function abrirModal(titulo) {
   const filme = filmes.find(f => f.titulo === titulo);
-  if (!filme) return;
+  alert(`Detalhes do filme: ${filme.titulo} - Nota: ${filme.nota}`);
+}
 
   alert(`Detalhes do Filme:
     Título: ${filme.titulo}
@@ -70,3 +44,4 @@ function abrirModal(titulo) {
     `);
   }
 
+window.onload = exibirFilmes;
