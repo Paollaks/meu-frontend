@@ -1,4 +1,6 @@
-const grid = document.getElementById('grid-filmes');
+const { calcularMedia } = require("../avaliadas");
+
+const grid = document.getElementById('grid-melhores');
 
 window.onload = buscarFilmes;
 
