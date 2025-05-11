@@ -51,10 +51,10 @@ function buscarFilmes() {
                 // Botão de coração
                 const btnFavorito = document.createElement('button');
                 btnFavorito.className = 'btn-favorito';
-                btnFavorito.innerHTML = '❤️'; // Ícone de coração
+                btnFavorito.innerHTML = '❤️';
                 btnFavorito.onclick = (e) => {
                     e.stopPropagation(); // Impede que o clique abra o modal
-                    adicionarAosFavoritos(filme.id);
+                    adicionarAosFavoritos(filme.idFilme);
                 };
 
                 div.appendChild(img);
@@ -69,16 +69,16 @@ function buscarFilmes() {
 }
 
 // Função para adicionar o filme aos favoritos
-function adicionarAosFavoritos(filmeId) {
-  const url = `https://localhost:7252/api/favoritos`;
-  const payload = { idFilme, idUsuario: 1 }; // Substitua pelo ID do usuário
+function adicionarAosFavoritos(idFilme) {
+  const url = `https://localhost:7252/api/favoritos`; // URL do endpoint do backend
+  const payload = { idFilme, idUsuario: 1 }; 
 
-  fetch(url, {
+  fetchComToken(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(payload),
+    body: JSON.stringify(payload), // Converte o objeto para JSON
   })
     .then(res => {
       if (!res.ok) {
@@ -129,28 +129,25 @@ function fecharModal() {
 // Fazendo a requisição para o método GetAll da API
 const url = `https://localhost:7252/api/Comentarios?idUsuario=1`;
 fetchComToken(url, { method: 'GET' })
-   .then(res => {
-     if (!res.ok) {
-       throw new Error(`Erro ao carregar comentários: ${res.status}`);
-     }
-     return res.json();
-   })
-   .then(comentarios => {
-     const comentariosContainer = document.getElementById('modal-comentario');
-     if (Array.isArray(comentarios.$values) && comentarios.$values.length > 0) {
-       console.log(comentarios.$values);
-       comentariosContainer.innerHTML = comentarios.$values
-         .map(comentario => `<p>${comentario.comentario}</p>`)
-         .join('');
-     } else {
-       console.log(comentarios);
-       comentariosContainer.innerHTML = '<p>Sem comentários disponíveis.</p>';
-     }
-   })
-   .catch(err => {
-     console.error('Erro ao carregar comentários:', err);
-     document.getElementById('modal-comentario').innerHTML = '<p>Erro ao carregar comentários.</p>';
-   });
+  .then(res => {
+    if (!res.ok) {
+      throw new Error(`Erro ao carregar comentários: ${res.status}`);
+    }
+    return res.json();
+  })
+  .then(comentarios => {
+    const comentariosContainer = document.getElementById('modal-comentario');
+    if (Array.isArray(comentarios.$values) && comentarios.$values.length > 0) {
+      const ultimoComentario = comentarios.$values[comentarios.$values.length - 1]; // Obtém o último comentário
+      comentariosContainer.innerHTML = `<p>${ultimoComentario.comentario}</p>`;
+    } else {
+      comentariosContainer.innerHTML = '<p>Sem comentários disponíveis.</p>';
+    }
+  })
+  .catch(err => {
+    console.error('Erro ao carregar comentários:', err);
+    document.getElementById('modal-comentario').innerHTML = '<p>Erro ao carregar comentários.</p>';
+  });
 
 function gerarEstrelas(nota) {
     if (!nota) return '';
