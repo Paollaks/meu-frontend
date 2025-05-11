@@ -5,16 +5,19 @@ const grid = document.getElementById('grid-melhores');
 window.onload = buscarFilmes;
 
 function buscarFilmes() {
-  const termo = document.getElementById('busca-filme')?.value || "";
+  const termo = document.getElementById('busca')?.value || "";
   let url = 'https://localhost:7252/api/Comentarios/usuario/1/filmes';
 
   if (termo.trim() !== "") {
     url += `?termo=${encodeURIComponent(termo)}`;
+    url += `?termo=${encodeURIComponent(termo)}`;
   }
 
-  fetch(url)
+  fetchComToken(url, { method: 'GET' })
     .then(res => {
-      if (!res.ok) throw new Error(`Erro na resposta: ${res.status}`);
+      if (!res.ok) {
+        throw new Error(`Erro na resposta: ${res.status}`);
+      }
       return res.json();
     })
     .then(dados => {
