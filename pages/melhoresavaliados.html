@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Melhores Avaliados</title>
-  <link rel="stylesheet" href="../css/melhoresavaliados.css">
+  <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
@@ -12,15 +12,15 @@
     <nav>
       <a href="../index.html">Início</a>
       <a href="filmesporgenero.html">Filmes Por Gênero</a>
-      <a href="melhores.html" class="active">Melhores Avaliados</a>
+      <a href="melhoresavaliados.html" class="active">Melhores Avaliados</a>
     </nav>
     <div class="user-menu">
       <div class="user-icon">
         <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="Perfil">
         <div class="user-dropdown">
           <a href="perfil-usuario.html">Perfil</a>
-          <a href="avaliadas.html">Avaliações</a>
-          <a href="#">Favoritados</a>
+          <a href="melhoresavaliados.html">Avaliações</a>
+          <a href="#" class="js">Favoritados</a> <!-- Correção feita aqui -->
           <a href="login-usuario.html">Desconectar</a>
         </div>
       </div>
@@ -29,7 +29,7 @@
 
   <div class="search-bar">
     <input type="text" id="busca-filme" placeholder="Pesquisar filme...">
-    <button onclick="buscarMelhores()" class="lupa-btn">
+    <button onclick="buscarMelhores()" class="lupa-btn" aria-label="Pesquisar filme">
       <svg class="icon-lupa" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
         <path fill="white" d="M10 2a8 8 0 105.293 14.293l4.707 4.707 1.414-1.414-4.707-4.707A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z"/>
       </svg>
