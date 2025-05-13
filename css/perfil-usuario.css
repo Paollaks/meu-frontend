@@ -1,186 +1,197 @@
 /* RESET */
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #3E666A;
-    color: black;
-  }
-  
-  header {
-    background-color: #1F1F1F;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 30px;
-  }
-  
-  
-  nav {
-    display: flex;
-    gap: 60px;
-    justify-content: center;
-    flex: 1;
-  }
-  
-  nav a {
-    color: #bb5050;
-    text-decoration: none;
-    font-style: italic;
-    font-size: 22px;
-  }
-  
-  nav a:hover, nav a.active {
-    text-decoration: underline;
-  }
-  
-  .user-icon {
-    background-color: #f4d7a1;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .user-icon img {
-    width: 22px;
-    height: 22px;
-  }
-  
-  
-  .perfil-container {
-    display: flex;
-    gap: 40px;
-    padding: 40px;
-  }
-  
-  .perfil-lateral {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 220px;
-    gap: 20px;
-  }
-  
-  .perfil-lateral img {
-    background-color: #f4d7a1;
-    border-radius: 50%;
-    width: 160px;
-    height: 160px;
-    padding: 20px;
-  }
-  
-  .perfil-lateral span {
-    font-size: 18px;
-  }
-  
-  .perfil-lateral button {
-    width: 180px;
-    padding: 12px;
-    margin: 5px 0;
-    background-color: #1F1F1F;
-    color: #bb5050;
-    border: none;
-    cursor: pointer;
-    font-size: 18px;
-    font-family: serif;
-  }
-  
-  .perfil-lateral button:hover {
-    text-decoration: underline;
-  }
-  
-  .perfil-conteudo {
-    flex: 1;
-  }
-  
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-bottom: 30px;
-  }
-  
-  form label {
-    font-size: 20px;
-  }
-  
-  form input {
-    padding: 15px;
-    font-size: 16px;
-    background-color: #f4d7a1;
-    border: none;
-    width: 100%;
-  }
-  
-  h2 {
-    margin: 30px 0 10px;
-    font-size: 24px;
-  }
-  
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 20px;
-    background-color: #1F1F1F;
-    padding: 20px;
-    border-radius: 8px;
-  }
-  
-  .grid .filme {
-    background-color: #ddd;
-    width: 100%;
-    height: 160px;
-    border-radius: 4px;
-  }
-  
-  /* Ícone de perfil com menu suspenso */
+  margin: 0;
+  font-family: "Instrument Serif", serif;
+  background-color: #3E666A;
+  color: #000000;
+}
+
+header {
+  background-color: #1A1E1F;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Logo */
+.logo img {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 40px;
+  height: 40px;
+}
+
+nav {
+  display: flex;
+  gap: 150px;
+  justify-content: center;
+  flex: 1;
+}
+
+nav a {
+  color: #bb5050;
+  text-decoration: none;
+  font-style: italic;
+  font-size: 30px;
+}
+
+nav a:hover,
+nav a.active {
+  text-decoration: underline #F3D3AA;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 7px;
+}
+
+.user-icon {
+  background-color: #f4d7a1;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-icon img {
+  width: 22px;
+  height: 22px;
+}
+
+
+.perfil-container {
+  display: flex;
+  gap: 40px;
+  padding: 40px;
+}
+
+.perfil-lateral {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 220px;
+  gap: 20px;
+}
+
+.perfil-lateral img {
+  background-color: #f4d7a1;
+  border-radius: 50%;
+  width: 160px;
+  height: 160px;
+  padding: 20px;
+}
+
+.perfil-lateral span {
+  font-size: 30px;
+}
+
+.perfil-lateral button {
+  width: 180px;
+  padding: 12px;
+  margin: 5px 0;
+  background-color: #1F1F1F;
+  color: #bb5050;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  font-family: serif;
+}
+
+.perfil-lateral button:hover {
+  text-decoration: underline;
+}
+
+.perfil-conteudo {
+  flex: 1;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+form label {
+  font-size: 30px;
+}
+
+form input {
+  padding: 15px;
+  font-size: 16px;
+  background-color: #f4d7a1;
+  border: none;
+  width: 100%;
+}
+
+h2 {
+  margin: 30px 0 10px;
+  font-size: 24px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 20px;
+  background-color: #1F1F1F;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.grid .filme {
+  background-color: #ddd;
+  width: 100%;
+  height: 160px;
+  border-radius: 4px;
+}
+
+/* Ícone de perfil com menu suspenso */
 .user-menu {
-    position: relative;
-    display: inline-block;
-  }
-  
-  .user-icon {
-    background-color: #f4d7a1;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-  }
-  
-  .user-icon img {
-    width: 22px;
-    height: 22px;
-  }
-  
-  .user-dropdown {
-    display: none;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background-color: #1F1F1F;
-    padding: 20px 30px;
-    border-radius: 10px;
-    z-index: 10;
-    min-width: 100px;
-  }
-  
-  .user-dropdown a {
-    display: block;
-    color: #bb5050;
-    text-decoration: none;
-    margin: 12px 0;
-    font-size: 18px;
-  }
-  
-  .user-dropdown a:hover {
-    text-decoration: underline;
-  }
-  
-  .user-menu:hover .user-dropdown {
-    display: block;
-  }
+  position: relative;
+  display: inline-block;
+}
+
+.user-icon {
+  background-color: #f4d7a1;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.user-icon img {
+  width: 22px;
+  height: 22px;
+}
+
+.user-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #1F1F1F;
+  padding: 20px 30px;
+  border-radius: 10px;
+  z-index: 10;
+  min-width: 100px;
+}
+
+.user-dropdown a {
+  display: block;
+  color: #bb5050;
+  text-decoration: none;
+  margin: 12px 0;
+  font-size: 18px;
+}
+
+.user-dropdown a:hover {
+  text-decoration: underline;
+}
+
+.user-menu:hover .user-dropdown {
+  display: block;
+}

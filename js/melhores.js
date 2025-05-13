@@ -28,19 +28,12 @@ function exibirFilmesMelhores() {
 
     grid.appendChild(filmeDiv);
   });
+}
 
 function abrirModal(titulo) {
   const filme = filmes.find(f => f.titulo === titulo);
   alert(`Detalhes do filme: ${filme.titulo} - Nota: ${filme.nota}`);
 }
 
-  alert(`Detalhes do Filme:
-    Título: ${filme.titulo}
-    Nota: ${filme.nota}
-    Gênero: ${filme.genero}
-    Ano: ${filme.ano}
-    Sinopse: ${filme.sinopse}
-    `);
-  }
 
 window.onload = exibirFilmes;

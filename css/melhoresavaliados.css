@@ -1,66 +1,66 @@
-/* Página de Melhores Avaliados */
+/* Estilo da grid de filmes */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
 
-body.avaliadas {
-    background-color: #3E666A;
-    font-family: Arial, sans-serif;
-    color: white;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .avaliadas-header {
-    background-color: #1F1F1F;
-    padding: 20px;
-    text-align: center;
-    font-size: 24px;
-    font-weight: bold;
-    color: #f4d7a1;
-  }
-  
-  .grid-avaliadas {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-    padding: 20px;
-  }
-  
-  .card-avaliado {
-    background-color: #1F1F1F;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    transition: transform 0.2s ease;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-  }
-  
-  .card-avaliado:hover {
-    transform: scale(1.05);
-  }
-  
-  .card-avaliado img {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 2 / 3;
-    object-fit: cover;
-    background-color: #222;
-  }
-  
-  .card-info {
-    padding: 15px;
-  }
-  
-  .card-info h3 {
-    margin: 10px 0 5px;
-    color: #f4d7a1;
-    font-size: 18px;
-  }
-  
-  .card-info .nota {
-    color: orange;
-    font-size: 1.1em;
-    font-weight: bold;
-  }
-  
+/* Cada card de filme */
+.filme {
+  background-color: #1c1c1c;
+  color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease;
+}
+
+.filme:hover {
+  transform: scale(1.03);
+}
+
+/* Imagem do filme */
+.filme img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Área de informações */
+.info-filme {
+  padding: 10px;
+  text-align: center;
+}
+
+.info-filme h3 {
+  font-size: 16px;
+  margin: 5px 0;
+}
+
+.info-filme p {
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+/* Estrelas de avaliação */
+.estrelas {
+  font-size: 16px;
+  margin: 5px 0;
+  color: gold;
+}
+
+/* Botão de detalhes */
+.info-filme button {
+  margin-top: 8px;
+  padding: 6px 12px;
+  background-color: #f39c12;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.info-filme button:hover {
+  background-color: #d78b0e;
+}

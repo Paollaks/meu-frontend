@@ -24,7 +24,7 @@ function salvarPerfil(event) {
   const nome = document.getElementById('nome').value;
   const email = document.getElementById('email').value;
 
-  fetch(`https://localhost:7252/api/Usuarios/${userId}`, {
+  fetch(`https://localhost:7252/api/usuarios/1`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
@@ -42,7 +42,7 @@ function salvarPerfil(event) {
 }
 
 function carregarFavoritos() {
-  fetch(`https://localhost:7252/api/Favoritos/usuario/${userId}`)
+  fetch(`https://localhost:7252/api/favoritos`)
     .then(res => res.json())
     .then(filmes => {
       const container = document.getElementById('favoritos');
@@ -58,7 +58,7 @@ function carregarFavoritos() {
 }
 
 function carregarAvaliacoes() {
-  fetch(`https://localhost:7252/api/Avaliacoes/usuario/${userId}`)
+  fetch(`https://localhost:7252/api/Comentarios/usuario/1/filmes`)
     .then(res => res.json())
     .then(filmes => {
       const container = document.getElementById('avaliacoes');

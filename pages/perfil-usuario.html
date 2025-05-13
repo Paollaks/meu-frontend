@@ -1,30 +1,38 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
   <title>Perfil do Usuário</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/perfil-usuario.css" />
 </head>
+
 <body>
-    <header>
-        <nav>
-          <a href="#" class="active">Início</a>
-          <a href="filmesporgenero.html">Filmes Por Gênero</a>
-          <a href="melhoresavaliados.html">Melhores Avaliados</a>
-        </nav>
-        <div class="user-menu" onclick="toggleMenu()">
-          <div class="user-icon">
-            <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="Perfil">
-          </div>
-          <div class="user-dropdown" id="dropdown-menu">
-            <a href="perfil-usuario.html">Perfil</a>
-            <a href="melhoresavaliados.html">Avaliações</a>
-            <a href="#">Favoritados</a>
-            <a href="login-usuario.html">Desconectar</a>
-          </div>
-        </div>
-         
-      </header>
+  <header>
+    <div class="logo">
+      <img src="../assets/Logo.svg" alt="Logo">
+    </div>
+    <nav>
+      <a href="../index.html" class="active">Início</a>
+      <a href="filmesporgenero.html">Filmes Por Gênero</a>
+      <a href="melhoresavaliados.html">Melhores Avaliados</a>
+    </nav>
+    <div class="user-menu" onclick="toggleMenu()">
+      <div class="user-icon">
+        <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="Perfil">
+      </div>
+      <div class="user-dropdown" id="dropdown-menu">
+        <a href="perfil-usuario.html">Perfil</a>
+        <a href="melhoresavaliados.html">Avaliações</a>
+        <a href="favoritadas.html">Favoritados</a>
+        <a href="login-usuario.html">Desconectar</a>
+      </div>
+    </div>
+
+  </header>
 
   <main class="perfil-container">
     <aside class="perfil-lateral">
@@ -58,4 +66,5 @@
 
   <script src="../js/perfil-usuario.js"></script>
 </body>
+
 </html>
