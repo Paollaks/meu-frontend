@@ -28,7 +28,6 @@ function exibirFilmesMelhores() {
 
     grid.appendChild(filmeDiv);
   });
-}
 
 function abrirModal(titulo) {
   const filme = filmes.find(f => f.titulo === titulo);
