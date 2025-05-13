@@ -1,10 +1,17 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
 .filme {
-  background-color: #ccc;
-  border-radius: 8px;
+  background-color: #1c1c1c;
+  color: white;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s;
-  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease;
 }
 
 .filme:hover {
@@ -13,43 +20,40 @@
 
 .filme img {
   width: 100%;
-  height: 180px;
-  object-fit: cover;
-  border-bottom: 1px solid #999;
+  height: auto;
+  display: block;
 }
 
 .info-filme {
   padding: 10px;
   text-align: center;
-  background-color: #f4f4f4;
 }
 
 .info-filme h3 {
-  margin: 8px 0 5px;
   font-size: 16px;
+  margin: 5px 0;
 }
 
 .info-filme p {
-  margin: 4px 0;
-  color: #333;
+  font-size: 14px;
+  margin: 5px 0;
 }
 
 .estrelas {
-  color: gold;
   font-size: 16px;
   margin: 5px 0;
+  color: gold;
 }
 
 .info-filme button {
   margin-top: 8px;
   padding: 6px 12px;
-  background-color: #b64949;
+  background-color: #f39c12;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
 }
 
 .info-filme button:hover {
-  background-color: #8f3a3a;
-}
+  background-color: #d78b0e;
