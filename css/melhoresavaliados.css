@@ -64,3 +64,258 @@
 .info-filme button:hover {
   background-color: #d78b0e;
 }
+
+/* Resetando margens e definindo a fonte */
+body {
+  margin: 0;
+  font-family: "Instrument Serif", serif;
+  background-color: #3E666A;
+  color: #F3D3AA;
+}
+
+/* Layout de grid para filmes */
+body.index .grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+  padding: 0 20px 40px;
+}
+
+/* Cabeçalho */
+header {
+  background-color: #1A1E1F;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Logo */
+.logo img {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 40px;
+  height: 40px;
+}
+
+/* Navegação */
+nav {
+  display: flex;
+  gap: 150px;
+  align-items: center;
+}
+
+/* Estilo dos links de navegação */
+nav a {
+  color: #bb5050;
+  text-decoration: none;
+  font-style: italic;
+  font-size: 30px;
+}
+
+nav a:hover,
+nav a.active {
+  text-decoration: underline #F3D3AA;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 7px;
+}
+
+/* Barra de busca */
+.search-bar {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+}
+
+.search-bar input {
+  width: 80%;
+  padding: 10px;
+  border-radius: 20px 0 0 20px;
+  border: none;
+  outline: none;
+}
+
+.search-bar button {
+  padding: 10px;
+  border: none;
+  background: black;
+  border-radius: 0 20px 20px 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-lupa {
+  width: 20px;
+  height: 20px;
+  fill: white;
+}
+
+/* Grid de filmes */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 0 20px 40px;
+}
+
+.filme {
+  background-color: #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.filme img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  aspect-ratio: 2 / 3;
+  background-color: #222;
+}
+
+.filme:hover {
+  transform: scale(1.05);
+  z-index: 2;
+}
+
+/* Cabeçalho do gênero */
+.genero-header {
+  background-color: #1f1f1f;
+  color: #f4d7a1;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  gap: 10px;
+  font-size: 20px;
+}
+
+.genero-header span {
+  cursor: pointer;
+  font-weight: bold;
+  color: #f4d7a1;
+}
+
+/* Modal de Detalhes do Filme */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.7);
+  font-family: sans-serif;
+}
+
+.modal-content {
+  background-color: #f3cfa5;
+  margin: 5% auto;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 900px;
+}
+
+.modal-body {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.modal-body img {
+  width: 250px;
+  height: auto;
+  background: #ccc;
+  border-radius: 4px;
+}
+
+.modal-info h2 {
+  margin-top: 0;
+  color: #1f1f1f;
+}
+
+.modal-info p {
+  color: #1f1f1f;
+  line-height: 1.4;
+}
+
+.estrelas {
+  color: orange;
+  font-size: 1.2em;
+  margin-left: 5px;
+}
+
+.close {
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+}
+
+/* Ícone de perfil com menu suspenso */
+.user-menu {
+  position: relative;
+  display: inline-block;
+}
+
+.user-icon {
+  background-color: #f4d7a1;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.user-icon img {
+  width: 22px;
+  height: 22px;
+}
+
+.user-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #1F1F1F;
+  padding: 20px 30px;
+  border-radius: 10px;
+  z-index: 10;
+  min-width: 100px;
+}
+
+.user-dropdown a {
+  display: block;
+  color: #bb5050;
+  text-decoration: none;
+  margin: 12px 0;
+  font-size: 18px;
+}
+
+.user-dropdown a:hover {
+  text-decoration: underline;
+}
+
+.user-menu:hover .user-dropdown {
+  display: block;
+}
+
+/* Estilo geral para o filme card */
+.filme-card {
+  background-color: #1F1F1F;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  color: white;
+}

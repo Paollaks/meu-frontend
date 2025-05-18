@@ -2,12 +2,22 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #121212;
-  color: #ffffff;
+  background-color: #3E666A;
+  color: white;
+}
+
+/* Layout de grid para filmes */
+body.index .grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+  padding: 0 20px 40px;
 }
 
 /* Cabeçalho */
 header {
+  background-color: #1F1F1F;
+  padding: 10px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -22,15 +32,31 @@ header {
   border-radius: 50%;
 }
 
+/* Logo */
+.logo img {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 40px;
+  height: 40px;
+}
+
 /* Navegação */
+nav {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+
+/* Estilo dos links de navegação */
 nav a {
   color: white;
   text-decoration: none;
-  margin: 0 10px;
+  font-style: italic;
+  font-size: 18px;
 }
 
 nav a.active {
-  font-weight: bold;
   text-decoration: underline;
 }
 
