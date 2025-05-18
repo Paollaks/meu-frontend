@@ -1,13 +1,20 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <title>Melhores Avaliados</title>
-  <link rel="stylesheet" href="../css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/melhoresavaliados.css">
 </head>
+
 <body>
   <header>
-    <div class="logo"></div>
+    <div class="logo">
+      <img src="../assets/Logo.svg" alt="Logo">
+    </div>
     <nav>
       <a href="../index.html">Início</a>
       <a href="filmesporgenero.html">Filmes Por Gênero</a>
@@ -15,7 +22,8 @@
     </nav>
     <div class="user-menu">
       <div class="user-icon">
-        <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="User profile icon, a simple black outline of a person in a circular frame, representing account or profile settings">
+        <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png"
+          alt="User profile icon, a simple black outline of a person in a circular frame, representing account or profile settings">
         <div class="user-dropdown">
           <a href="perfil-usuario.html">Perfil</a>
           <a href="avaliadas.html">Avaliações</a>
@@ -29,19 +37,37 @@
     <input type="text" id="busca-filme" placeholder="Pesquisar filme...">
     <button onclick="buscarMelhores()" class="lupa-btn" aria-label="Pesquisar filme">
       <svg class="icon-lupa" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        <path fill="white" d="M10 2a8 8 0 105.293 14.293l4.707 4.707 1.414-1.414-4.707-4.707A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z"/>
+        <path fill="white"
+          d="M10 2a8 8 0 105.293 14.293l4.707 4.707 1.414-1.414-4.707-4.707A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z" />
       </svg>
     </button>
   </div>
+ <div class="grid" id="grid-filmes">
+    <!-- Os filmes serão inseridos aqui -->
+  </div>
 
-  <!-- Seção de Melhores Avaliados -->
-  <section id="melhores-filmes">
-    <div class="genero-header">
-      <h2>Melhores Avaliados</h2>
+  <!-- Modal de Detalhes do Filme -->
+  <div id="modal-filme" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="fecharModal()">&times;</span>
+      <div class="modal-body">
+        <img id="modal-img" src="" alt="Capa do Filme">
+        <div class="modal-info">
+          <h2 id="modal-titulo"></h2>
+          <p><strong>Ano de Lançamento:</strong> <span id="modal-ano"></span></p>
+          <p><strong>Gênero:</strong> <span id="modal-genero"></span></p>
+          <p><strong>Sinopse:</strong> <span id="modal-sinopse"></span></p>
+          <p>
+            <strong>Nota média:</strong>
+            <span id="modal-nota"></span>
+            <span id="modal-estrelas" class="estrelas"></span>
+          </p>
+        </div>
+      </div>
     </div>
-    <div class="grid" id="grid-melhores"></div>
-  </section>
+  </div>
 
   <script src="../js/melhores.js"></script>
 </body>
+
 </html>

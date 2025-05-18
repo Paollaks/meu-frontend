@@ -1,6 +1,6 @@
 body {
-  background-color: #476f71;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Instrument Serif", serif;
+  background-color: #3E666A;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,7 +10,7 @@ body {
 }
 
 .container {
-  background-color: #1a1e21;
+  background-color: #1A1E1F;
   padding: 30px 30px;
   border-radius: 15px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -23,11 +23,11 @@ body {
 }
 
 .form-box h2 {
-  color: #ffffff;
+  color: #B0333B;
   text-align: center;
   margin-top: 0;         /* <-- Aqui está o ajuste - ajudou de nada, rever depois */
   margin-bottom: 15px;
-  font-size: 35px;
+  font-size: 30px;
   font-weight: 600;
 }
 

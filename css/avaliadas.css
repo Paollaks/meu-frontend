@@ -1,9 +1,9 @@
 /* Resetando margens e definindo a fonte */
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: "Instrument Serif", serif;
   background-color: #3E666A;
-  color: white;
+  color: #F3D3AA;
 }
 
 /* Layout de grid para filmes */
@@ -16,17 +16,26 @@ body.index .grid {
 
 /* Cabeçalho */
 header {
-  background-color: #1F1F1F;
-  padding: 10px 20px;
+  background-color: #1A1E1F;
+  padding: 15px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
+/* Logo */
+.logo img {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 40px;
+  height: 40px;
+}
+
 /* Navegação */
 nav {
   display: flex;
-  gap: 30px;
+  gap: 150px;
   align-items: center;
 }
 
@@ -35,12 +44,14 @@ nav a {
   color: #bb5050;
   text-decoration: none;
   font-style: italic;
-  font-size: 18px;
+  font-size: 30px;
 }
 
 nav a:hover,
 nav a.active {
-  text-decoration: underline;
+  text-decoration: underline #F3D3AA;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 7px;
 }
 
 /* Barra de busca */
