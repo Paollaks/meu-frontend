@@ -1,12 +1,3 @@
-/* Estilo da grid de filmes */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 20px;
-  padding: 20px;
-}
-
-/* Cada card de filme */
 .filme {
   background-color: #1c1c1c;
   color: white;
@@ -62,7 +53,7 @@
 }
 
 .info-filme button:hover {
-  background-color: #d78b0e;
+  background-color: #8f3a3a;
 }
 
 /* Resetando margens e definindo a fonte */
@@ -319,3 +310,4 @@ nav a.active {
   text-align: center;
   color: white;
 }
+>>>>>>> 9625171596413308a525343fe3c6c64f5518ea0f

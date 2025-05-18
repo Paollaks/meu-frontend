@@ -1,242 +1,132 @@
+const filmes = [
+  {
+    titulo: "Missão Relâmpago",
+    genero: "acao",
+    ano: 2023,
+    nota: 4.7,
+    imagem: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=300&q=80",
+    sinopse: "Um espião aposentado precisa voltar à ativa para salvar sua filha de uma conspiração internacional."
+  },
+  {
+    titulo: "Primavera em Veneza",
+    genero: "romance",
+    ano: 2022,
+    nota: 4.4,
+    imagem: "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=300&q=80",
+    sinopse: "Durante uma viagem à Itália, duas almas solitárias encontram um amor inesperado."
+  },
+  {
+    titulo: "Dia de Louco",
+    genero: "comedia",
+    ano: 2021,
+    nota: 4.1,
+    imagem: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=300&q=80",
+    sinopse: "Um funcionário público tenta manter a sanidade enquanto tudo dá errado em seu primeiro dia como prefeito."
+  },
+  {
+    titulo: "O Peso da Verdade",
+    genero: "drama",
+    ano: 2020,
+    nota: 4.8,
+    imagem: "https://images.unsplash.com/photo-1454023492550-5696f8ff10e1?auto=format&fit=crop&w=300&q=80",
+    sinopse: "Baseado em uma história real, um jovem advogado desafia um sistema corrupto em busca de justiça."
+  },
+  {
+    titulo: "Horizonte Final",
+    genero: "ficcao",
+    ano: 2024,
+    nota: 4.6,
+    imagem: "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=300&q=80",
+    sinopse: "No ano 2098, uma equipe de cientistas descobre um portal para outra galáxia – mas algo os espera do outro lado."
+  },
+  {
+    titulo: "Silêncio Mortal",
+    genero: "terror",
+    ano: 2021,
+    nota: 4.2,
+    imagem: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=300&q=80",
+    sinopse: "Um grupo de amigos em uma cabana isolada descobre que o silêncio é a única forma de sobreviver."
+  }
+];
 
-const grid = document.getElementById('grid-filmes');
+function filtrarGenero(genero) {
+  const grid = document.getElementById("grid-genero");
+  grid.innerHTML = "";
 
-window.onload = buscarFilmes;
+  const filtrados = filmes.filter(filme => filme.genero === genero);
 
-function buscarFilmes() {
-  const termo = document.getElementById('busca')?.value || "";
-  let url = 'https://localhost:7252/api/Comentarios/usuario/1/filmes';
-
-  if (termo.trim() !== "") {
-    url += `?termo=${encodeURIComponent(termo)}`;
+  if (filtrados.length === 0) {
+    grid.innerHTML = "<p>Nenhum filme encontrado para este gênero.</p>";
+    return;
   }
 
-  fetchComToken(url, { method: 'GET' })
-    .then(res => {
-      if (!res.ok) {
-        throw new Error(`Erro na resposta: ${res.status}`);
-      }
-      return res.json();
-    })
-    .then(dados => {
-      const filmes =
-        Array.isArray(dados) ? dados :
-          Array.isArray(dados.$values) ? dados.$values :
-            Array.isArray(dados.value) ? dados.value :
-              null;
+  filtrados.forEach(filme => {
+    const filmeDiv = document.createElement("div");
+    filmeDiv.classList.add("filme");
 
-      if (!Array.isArray(filmes)) {
-        grid.innerHTML = '<p>Erro: formato de resposta inválido.</p>';
-        console.error("Resposta inesperada da API:", dados);
-        return;
-      }
+    filmeDiv.innerHTML = `
+      <img src="${filme.imagem}" alt="${filme.titulo}" 
+           onclick="abrirModal('${encodeURIComponent(filme.titulo)}')" 
+           onerror="this.onerror=null;this.src='https://via.placeholder.com/300x450?text=Imagem+Indisponivel';">
+      <div class="info-filme">
+        <h3>${filme.titulo}</h3>
+        <p>Nota: ${filme.nota.toFixed(1)}</p>
+        <div class="estrelas">${gerarEstrelas(filme.nota)}</div>
+        <button onclick="abrirModal('${encodeURIComponent(filme.titulo)}')">Ver Detalhes</button>
+      </div>
+    `;
 
-      grid.innerHTML = '';
-
-      if (filmes.length === 0) {
-        grid.innerHTML = '<p>Nenhum filme encontrado.</p>';
-        return;
-      }
-
-      filmes.forEach(filme => {
-        const div = document.createElement('div');
-        div.className = 'filme';
-        div.onclick = () => abrirModal(filme);
-
-        const img = document.createElement('img');
-        img.src = filme.fotoUrl && filme.fotoUrl.includes('/t/p/')
-          ? filme.fotoUrl
-          : 'https://via.placeholder.com/140x200';
-        img.alt = filme.titulo;
-
-        div.appendChild(img);
-        grid.appendChild(div);
-      });
-    })
-    .catch(err => {
-      console.error('Erro ao buscar filmes:', err);
-      grid.innerHTML = '<p>Erro ao carregar filmes.</p>';
-    });
-}
-
-// 🔽 Modal - funções no final do arquivo
-  function abrirModal(filme, user) {
-    document.getElementById('modal-img').src = filme.fotoUrl && filme.fotoUrl.includes('/t/p/')
-      ? filme.fotoUrl
-      : 'https://via.placeholder.com/250x350';
-    document.getElementById('modal-titulo').textContent = filme.titulo;
-    document.getElementById('modal-ano').textContent = filme.anoLancamento;
-    document.getElementById('modal-genero').textContent = filme.genero;
-    document.getElementById('modal-sinopse').textContent = filme.sinopse;
-    document.getElementById('modal-nota').textContent = filme.notaMedia?.toFixed(1) || 'N/A';
-    document.getElementById('modal-estrelas').innerHTML = gerarEstrelas(filme.notaMedia);
-
-    document.getElementById('modal-filme').style.display = 'block';
-
-        const avaliacoesContainer = document.getElementById('avaliacoesContainer'); // Cria o contêiner principal
-        avaliacoesContainer.style.display = 'flex';
-        avaliacoesContainer.style.alignItems = 'center';
-        avaliacoesContainer.style.gap = '10px';
-
-
-        // Cria o input para avaliação
-        const inputAvaliacao = document.createElement('input');
-        inputAvaliacao.type = 'text';
-        inputAvaliacao.id = 'avaliacao';
-        inputAvaliacao.placeholder = 'Digite sua avaliação';
-        inputAvaliacao.style.flex = '1';
-        inputAvaliacao.style.padding = '8px';
-        inputAvaliacao.style.border = '1px solid #ccc';
-        inputAvaliacao.style.borderRadius = '4px';
-        /*const comentario = document.getElementById('avaliacao').value;*/
-        const url = `https://localhost:7252/api/Comentarios`;
-
-        fetchComToken(url, {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify()
-        })
-          .then(res => {
-            if (!res.ok) {
-              throw new Error(`Erro ao processar comentário: ${res.status}`);
-            }
-            return res.json();
-          })
-          .then(() => { console.log(body);/* inputAvaliacao.textContent = texto;*/ })
-          .catch(err => {
-            console.error('Erro ao carregar comentário:', err);
-            alert('Erro ao carregar comentário.');
-          });
-
-
-        // Cria o botão de salvar
-        const salvarButton = document.createElement('button');
-        salvarButton.id = 'salvar-avaliacao';
-        salvarButton.textContent = 'Salvar';
-        salvarButton.onclick = () => comentar(filme);
-        salvarButton.style.padding = '8px 12px';
-        salvarButton.style.backgroundColor = '#4CAF50';
-        salvarButton.style.color = 'white';
-        salvarButton.style.border = 'none';
-        salvarButton.style.borderRadius = '4px';
-        salvarButton.style.cursor = 'pointer';
-
-        // Cria o botão de excluir
-        const excluirButton = document.createElement('button');
-        excluirButton.id = 'excluir-avaliacao';
-        excluirButton.textContent = '🗑️';
-        excluirButton.style.padding = '8px';
-        excluirButton.style.backgroundColor = '#f44336';
-        excluirButton.style.color = 'white';
-        excluirButton.style.border = 'none';
-        excluirButton.style.borderRadius = '4px';
-        excluirButton.style.cursor = 'pointer';
-
-        // Adiciona os elementos ao contêiner principal
-        if (avaliacoesContainer.firstChild === null) {
-          avaliacoesContainer.appendChild(inputAvaliacao);
-          avaliacoesContainer.appendChild(salvarButton);
-          avaliacoesContainer.appendChild(excluirButton);
-        }
-      }
-
-// Fazendo a requisição para o método GetAll da API
-// const url = `https://localhost:7252/api/Comentarios?idUsuario=1`;
-// fetchComToken(url, { method: 'GET' })
-//   .then(res => {
-//     if (!res.ok) {
-//       throw new Error(`Erro ao carregar comentários: ${res.status}`);
-//     }
-//     return res.json();
-//   })
-//   .then(comentarios => {
-//     const comentariosContainer = document.getElementById('modal-avaliacao');
-//     if (Array.isArray(comentarios.$values) && comentarios.$values.length > 0) {
-//       console.log(comentarios.$values);
-//       comentariosContainer.innerHTML = comentarios.$values
-//         .map(comentario => `<p>${comentario.comentario}</p>`)
-//         .join('');
-//     } else {
-//       console.log(comentarios);
-//       comentariosContainer.innerHTML = '<p>Sem comentários disponíveis.</p>';
-//     }
-//   })
-//   .catch(err => {
-//     console.error('Erro ao carregar comentários:', err);
-//     document.getElementById('modal-avaliacao').innerHTML = '<p>Erro ao carregar comentários.</p>';
-//   });
-
-function comentar(filme) {
-  const comentario = document.getElementById('avaliacao').value;
-  const url = 'https://localhost:7252/api/Comentarios';
-  const data = {
-    idUsuario: 1,
-    tmdbFilmeId: 254,
-    texto: comentario
-  };
-
-  fetchComToken(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
-  })
-    .then(res => {
-      if (!res.ok) {
-        throw new Error(`Erro ao enviar comentário: ${res.status}`);
-      }
-      return res.json();
-    })
-    .then(() => {
-      alert('Comentário enviado com sucesso!');
-      document.getElementById('avaliacao').value = '';
-      window.location.reload();
-    })
-    .catch(err => {
-      console.error('Erro ao enviar comentário:', err);
-      alert('Erro ao enviar comentário.');
-    });
-}
-
-function fecharModal() {
-  document.getElementById('modal-filme').style.display = 'none';
+    grid.appendChild(filmeDiv);
+  });
 }
 
 function gerarEstrelas(nota) {
-  if (!nota) return '';
-  const estrelasCheias = Math.round(nota / 2);
-  return Array.from({ length: 5 }, (_, i) => i < estrelasCheias ? '★' : '☆').join('');
-}
+  const total = 5;
+  const cheias = Math.round(nota);
+  let html = "";
 
-document.getElementById('busca').addEventListener('keydown', function (e) {
-  if (e.key === 'Enter') {
-    buscarFilmes();
+  for (let i = 1; i <= total; i++) {
+    html += i <= cheias ? "⭐" : "☆";
   }
-});
-
-function toggleMenu() {
-  const menu = document.getElementById("dropdown-menu");
-  menu.style.display = menu.style.display === "block" ? "none" : "block";
+  return html;
 }
 
-// Fecha o menu se clicar fora
-  document.addEventListener("click", function (event) {
-    const userMenu = document.querySelector(".user-menu");
-    const dropdown = document.getElementById("dropdown-menu");
+function abrirModal(titulo) {
+  const filme = filmes.find(f => f.titulo === decodeURIComponent(titulo));
+  if (!filme) return;
 
-    if (!userMenu.contains(event.target)) {
-      dropdown.style.display = "none";
-    }
+  alert(`Detalhes do Filme:
+Título: ${filme.titulo}
+Nota: ${filme.nota}
+Gênero: ${filme.genero}
+Ano: ${filme.ano}
+Sinopse: ${filme.sinopse}`);
+}
+
+function mostrarMelhoresAvaliados() {
+  const grid = document.getElementById("grid-melhores");
+  if (!grid) return;
+  grid.innerHTML = "";
+
+  // Ordena por nota decrescente e pega os 6 primeiros
+  const melhores = filmes.slice().sort((a, b) => b.nota - a.nota).slice(0, 6);
+
+  melhores.forEach(filme => {
+    const filmeDiv = document.createElement("div");
+    filmeDiv.classList.add("filme");
+
+    filmeDiv.innerHTML = `
+      <img src="${filme.imagem}" alt="${filme.titulo}" 
+           onclick="abrirModal('${encodeURIComponent(filme.titulo)}')" 
+           onerror="this.onerror=null;this.src='https://via.placeholder.com/300x450?text=Imagem+Indisponivel';">
+      <div class="info-filme">
+        <h3>${filme.titulo}</h3>
+        <p>Nota: ${filme.nota.toFixed(1)}</p>
+        <div class="estrelas">${gerarEstrelas(filme.nota)}</div>
+        <button onclick="abrirModal('${encodeURIComponent(filme.titulo)}')">Ver Detalhes</button>
+      </div>
+    `;
+
+    grid.appendChild(filmeDiv);
   });
-
-function fetchComToken(url, options = {}) {
-  const jwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Ikx1YW5hTGF1cmEiLCJuYW1laWQiOiIxIiwibmJmIjoxNzQ2OTg3NTI1LCJleHAiOjE3NDY5OTQ3MjUsImlhdCI6MTc0Njk4NzUyNX0.K8VzoR7OPJfSC--4oTJmem2eh1CCC_VlHS1CvkqFtjs";
-
-  // Adiciona o cabeçalho Authorization com o token
-  const headers = {
-    'Authorization': `Bearer ${jwtToken}`,
-    'Content-Type': 'application/json',
-    ...options.headers, // Permite sobrescrever ou adicionar outros cabeçalhos
-  };
-
-  return fetch(url, { ...options, headers });
 }
