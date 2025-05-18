@@ -1,28 +1,28 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Melhores Avaliados</title>
-  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/melhoresavaliados.css">
 </head>
-
 <body>
   <header>
-    <div class="logo"></div>
-    <nav>
+    <div class="logo" aria-label="Logo do site"></div>
+    
+    <nav role="navigation">
       <a href="../index.html">Início</a>
       <a href="filmesporgenero.html">Filmes Por Gênero</a>
       <a href="melhoresavaliados.html" class="active">Melhores Avaliados</a>
     </nav>
-    <div class="user-menu">
+
+    <div class="user-menu" onclick="toggleMenu()">
       <div class="user-icon">
-        <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="User profile icon, a simple black outline of a person in a circular frame, representing account or profile settings">
-        <div class="user-dropdown">
+        <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="Foto do usuário logado">
+        <div class="user-dropdown" id="dropdown-menu">
           <a href="perfil-usuario.html">Perfil</a>
           <a href="avaliadas.html">Avaliações</a>
-          <a href="favoritadas.html">Favoritados</a>
+          <a href="#">Favoritados</a>
           <a href="login-usuario.html">Desconectar</a>
         </div>
       </div>
@@ -31,20 +31,23 @@
 
   <div class="search-bar">
     <input type="text" id="busca-filme" placeholder="Pesquisar filme...">
-    <button onclick="buscarFilmes(document.getElementById('grid-melhores'), document.getElementById('busca-filme').value)" class="lupa-btn" aria-label="Pesquisar filme">
+    <button 
+      onclick="buscarFilmes(document.getElementById('grid-melhores'), document.getElementById('busca-filme').value)" 
+      class="lupa-btn" 
+      aria-label="Pesquisar filme"
+    >
       <svg class="icon-lupa" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        <path fill="white"
-          d="M10 2a8 8 0 105.293 14.293l4.707 4.707 1.414-1.414-4.707-4.707A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z" />
+        <path fill="white" d="M10 2a8 8 0 105.293 14.293l4.707 4.707 1.414-1.414-4.707-4.707A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z"/>
       </svg>
     </button>
   </div>
 
-  <!-- Seção de Melhores Avaliados -->
   <section id="melhores-filmes">
     <div class="genero-header">
       <h2>Melhores Avaliados</h2>
     </div>
-  </div>
+    <div class="grid" id="grid-melhores"></div>
+  </section>
 
   <!-- Modal Reutilizável -->
   <div id="modal-filme" class="modal" style="display:none">
@@ -67,20 +70,8 @@
     </div>
   </div>
 
-  <!-- Script principal -->
+  <!-- Script unificado -->
   <script src="../js/melhores.js"></script>
-
-  <!-- Script para toggle do menu -->
-  <script>
-    function toggleMenu() {
-      const menu = document.getElementById("dropdown-menu");
-      if (menu.style.display === "block") {
-        menu.style.display = "none";
-      } else {
-        menu.style.display = "block";
-      }
-    }
-  </script>
 </body>
-
 </html>
+
