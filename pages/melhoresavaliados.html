@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -19,10 +18,7 @@
 
     <div class="user-menu" onclick="toggleMenu()">
       <div class="user-icon">
-        <img
-          src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png"
-          alt="Ícone de perfil de usuário"
-        />
+        <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="Ícone de perfil de usuário" />
         <div class="user-dropdown" id="dropdown-menu">
           <a href="perfil-usuario.html">Perfil</a>
           <a href="avaliadas.html">Avaliações</a>
@@ -35,21 +31,13 @@
 
   <div class="search-bar">
     <input type="text" id="busca-filme" placeholder="Pesquisar filme..." />
-    <button
-      onclick="buscarFilmes(document.getElementById('grid-melhores'), document.getElementById('busca-filme').value)"
-      class="lupa-btn"
-      aria-label="Pesquisar filme"
-    >
+    <button onclick="buscarFilmes(document.getElementById('grid-melhores'), document.getElementById('busca-filme').value)" class="lupa-btn" aria-label="Pesquisar filme">
       <svg class="icon-lupa" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        <path
-          fill="white"
-          d="M10 2a8 8 0 105.293 14.293l4.707 4.707 1.414-1.414-4.707-4.707A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z"
-        />
+        <path fill="white" d="M10 2a8 8 0 105.293 14.293l4.707 4.707 1.414-1.414-4.707-4.707A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z"/>
       </svg>
     </button>
   </div>
 
-  <!-- Seção de Melhores Avaliados -->
   <section id="melhores-filmes">
     <div class="genero-header">
       <h2>Melhores Avaliados</h2>
@@ -57,7 +45,6 @@
     <div id="grid-melhores" class="grid-filmes"></div>
   </section>
 
-  <!-- Modal Reutilizável -->
   <div id="modal-filme" class="modal" style="display: none">
     <div class="modal-content">
       <span class="close" onclick="fecharModal()">&times;</span>
@@ -68,19 +55,12 @@
           <p><strong>Ano de Lançamento:</strong> <span id="modal-ano"></span></p>
           <p><strong>Gênero:</strong> <span id="modal-genero"></span></p>
           <p><strong>Sinopse:</strong> <span id="modal-sinopse"></span></p>
-          <p>
-            <strong>Nota média:</strong>
-            <span id="modal-nota"></span>
-            <span id="modal-estrelas" class="estrelas"></span>
-          </p>
+          <p><strong>Nota média:</strong> <span id="modal-nota"></span> <span id="modal-estrelas" class="estrelas"></span></p>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Script JS -->
   <script src="../js/melhores.js"></script>
 </body>
-
 </html>
-

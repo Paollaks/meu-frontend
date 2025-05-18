@@ -1,8 +1,7 @@
-const grid = document.getElementById('grid-melhores');
-
-window.onload = exibirFilmesMelhores;
+document.addEventListener("DOMContentLoaded", exibirFilmesMelhores);
 
 function exibirFilmesMelhores() {
+  const grid = document.getElementById('grid-melhores');
   const termo = document.getElementById('busca-filme')?.value || "";
   let url = 'https://localhost:7252/api/Avaliacoes/top-rated';
 
@@ -43,9 +42,7 @@ function exibirFilmesMelhores() {
         div.onclick = () => abrirModal(filme);
 
         const img = document.createElement('img');
-        img.src = filme.fotoUrl && filme.fotoUrl.includes('/t/p/')
-          ? filme.fotoUrl
-          : 'https://via.placeholder.com/140x200';
+        img.src = filme.fotoUrl || 'https://via.placeholder.com/140x200';
         img.alt = filme.titulo;
 
         div.appendChild(img);
@@ -77,9 +74,7 @@ function buscarFilmes(container, termo) {
         div.onclick = () => abrirModal(filme);
 
         const img = document.createElement('img');
-        img.src = filme.fotoUrl && filme.fotoUrl.includes('/t/p/')
-          ? filme.fotoUrl
-          : 'https://via.placeholder.com/140x200';
+        img.src = filme.fotoUrl || 'https://via.placeholder.com/140x200';
         img.alt = filme.titulo;
 
         div.appendChild(img);
@@ -94,9 +89,7 @@ function buscarFilmes(container, termo) {
 
 // 🔽 Modal
 function abrirModal(filme) {
-  document.getElementById('modal-img').src = filme.fotoUrl && filme.fotoUrl.includes('/t/p/')
-    ? filme.fotoUrl
-    : 'https://via.placeholder.com/250x350';
+  document.getElementById('modal-img').src = filme.fotoUrl || 'https://via.placeholder.com/250x350';
   document.getElementById('modal-titulo').textContent = filme.titulo;
   document.getElementById('modal-ano').textContent = filme.anoLancamento;
   document.getElementById('modal-genero').textContent = filme.genero;
@@ -117,12 +110,12 @@ function gerarEstrelas(nota) {
   return Array.from({ length: 5 }, (_, i) => i < estrelasCheias ? '★' : '☆').join('');
 }
 
-// Corrigido para usar 'busca-filme'
+// Busca ao pressionar Enter
 document.getElementById('busca-filme').addEventListener('keydown', function (e) {
-  if (e.key === 'Enter') {
+  if (e.key === 'Enter' && e.target.value.trim() !== "") {
     buscarFilmes(
       document.getElementById('grid-melhores'),
-      document.getElementById('busca-filme').value
+      e.target.value
     );
   }
 });
@@ -134,7 +127,7 @@ function toggleMenu() {
   }
 }
 
-document.addEventListener("click", function(event) {
+document.addEventListener("click", function (event) {
   const userMenu = document.querySelector(".user-menu");
   const dropdown = document.getElementById("dropdown-menu");
 
