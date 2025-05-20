@@ -1,78 +1,100 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Início</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <title>Início</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
-</head>
-
-<body class="index">
-
-  <header>
-    <div class="logo">
-      <img src="./assets/Logo.svg" alt="Logo">
-    </div>
-    <nav>
-      <a href="./index.html" class="active">Início</a>
-      <a href="pages/filmesporgenero.html">Filmes Por Gênero</a>
-      <a href="pages/melhoresavaliados.html">Melhores Avaliados</a>
-    </nav>
-    <div class="user-menu" onclick="toggleMenu()">
-      <div class="user-icon">
-        <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="Perfil">
+  <body class="index">
+    <header>
+      <div class="logo">
+        <img src="./assets/Logo.svg" alt="Logo" />
       </div>
-      <div class="user-dropdown" id="dropdown-menu">
-        <a href="./pages/perfil-usuario.html">Perfil</a>
-        <a href="./pages/melhoresavaliados.html">Avaliações</a>
-        <a href="#">Favoritados</a>
-        <a href="./pages/login-usuario.html">Desconectar</a>
+      <nav>
+        <a href="./index.html" class="active">Início</a>
+        <a href="pages/filmesporgenero.html">Filmes Por Gênero</a>
+        <a href="pages/melhoresavaliados.html">Melhores Avaliados</a>
+      </nav>
+      <div class="user-menu" onclick="toggleMenu()">
+        <div class="user-icon">
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png"
+            alt="Perfil"
+          />
+        </div>
+        <div class="user-dropdown" id="dropdown-menu">
+          <a href="./pages/perfil-usuario.html">Perfil</a>
+          <a href="./pages/melhoresavaliados.html">Avaliações</a>
+          <a href="#">Favoritados</a>
+          <a href="./pages/login-usuario.html">Desconectar</a>
+        </div>
       </div>
+    </header>
+
+    <div class="search-bar">
+      <input type="text" id="busca" placeholder="Pesquisar filmes..." />
+      <button onclick="buscarFilmes()" class="search-btn" aria-label="Buscar">
+        <svg
+          class="icon-lupa"
+          xmlns="http://www.w3.org/2000/svg"
+          height="20"
+          viewBox="0 0 24 24"
+          width="20"
+        >
+          <circle
+            cx="10"
+            cy="10"
+            r="7"
+            stroke="white"
+            stroke-width="2"
+            fill="none"
+          />
+          <line
+            x1="15"
+            y1="15"
+            x2="22"
+            y2="22"
+            stroke="white"
+            stroke-width="2"
+          />
+        </svg>
+      </button>
     </div>
 
-  </header>
+    <div class="grid" id="grid-filmes">
+      <!-- Os filmes serão inseridos aqui -->
+    </div>
 
-  <div class="search-bar">
-    <input type="text" id="busca" placeholder="Pesquisar filmes...">
-    <button onclick="buscarFilmes()" class="search-btn" aria-label="Buscar">
-      <svg class="icon-lupa" xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20">
-        <circle cx="10" cy="10" r="7" stroke="white" stroke-width="2" fill="none" />
-        <line x1="15" y1="15" x2="22" y2="22" stroke="white" stroke-width="2" />
-      </svg>
-    </button>
-  </div>
-
-
-  <div class="grid" id="grid-filmes">
-    <!-- Os filmes serão inseridos aqui -->
-  </div>
-
-  <!-- Modal de Detalhes do Filme -->
-  <div id="modal-filme" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="fecharModal()">&times;</span>
-      <div class="modal-body">
-        <img id="modal-img" src="" alt="Capa do Filme">
-        <div class="modal-info">
-          <h2 id="modal-titulo"></h2>
-          <p><strong>Ano de Lançamento:</strong> <span id="modal-ano"></span></p>
-          <p><strong>Gênero:</strong> <span id="modal-genero"></span></p>
-          <p><strong>Sinopse:</strong> <span id="modal-sinopse"></span></p>
-          <p>
-            <strong>Nota média:</strong>
-            <span id="modal-nota"></span>
-            <span id="modal-estrelas" class="estrelas"></span>
-          </p>
+    <!-- Modal de Detalhes do Filme -->
+    <div id="modal-filme" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="fecharModal()">&times;</span>
+        <div class="modal-body">
+          <img id="modal-img" src="" alt="Capa do Filme" />
+          <div class="modal-info">
+            <h2 id="modal-titulo"></h2>
+            <p>
+              <strong>Ano de Lançamento:</strong> <span id="modal-ano"></span>
+            </p>
+            <p><strong>Gênero:</strong> <span id="modal-genero"></span></p>
+            <p><strong>Sinopse:</strong> <span id="modal-sinopse"></span></p>
+            <p>
+              <strong>Nota média:</strong>
+              <span id="modal-nota"></span>
+              <span id="modal-estrelas" class="estrelas"></span>
+            </p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <script src="js/main.js"></script>
-
-</body>
-
+    <script src="js/main.js"></script>
+  </body>
 </html>
