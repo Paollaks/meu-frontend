@@ -133,9 +133,15 @@ nav a.active {
   background: black;
   border-radius: 0 20px 20px 0;
   cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.filme-card:hover {
+  transform: scale(1.05);
 }
 
 .icon-lupa {
@@ -147,7 +153,7 @@ nav a.active {
 /* Grid de filmes */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   gap: 20px;
   padding: 0 20px 40px;
 }
@@ -163,6 +169,7 @@ nav a.active {
 .filme img {
   width: 100%;
   height: auto;
+  border-radius: 5px;
   object-fit: contain;
   display: block;
   aspect-ratio: 2 / 3;
@@ -202,7 +209,7 @@ nav a.active {
   height: 100%;
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.7);
-  font-family: sans-serif;
+  font-family: "Instrument Serif", serif;
 }
 
 .modal-content {
@@ -224,6 +231,7 @@ nav a.active {
 .modal-body img {
   width: 250px;
   height: auto;
+  border-radius: 8px;
   background: #ccc;
   border-radius: 4px;
 }
@@ -310,4 +318,3 @@ nav a.active {
   text-align: center;
   color: white;
 }
->>>>>>> 9625171596413308a525343fe3c6c64f5518ea0f

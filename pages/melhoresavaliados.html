@@ -2,12 +2,16 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Melhores Avaliados</title>
-  <link rel="stylesheet" href="../css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/melhoresavaliados.css" />
+  
 </head>
 
-<body>
+<body class="melhoresavaliados">
+  
   <header>
 <div class="logo">
   <a href="../index.html">
@@ -42,24 +46,29 @@
     </button>
   </div>
 
-  <section id="melhores-filmes">
-    <div class="genero-header">
-      <h2>Melhores Avaliados</h2>
-    </div>
-    <div id="grid-melhores" class="grid-filmes"></div>
-  </section>
+  <div class="grid" id="grid-filmes">
+    <!-- Os filmes serão inseridos aqui -->
+  </div>
 
-  <div id="modal-filme" class="modal" style="display: none">
+  <!-- Modal de Detalhes do Filme -->
+  <div id="modal-filme" class="modal">
     <div class="modal-content">
       <span class="close" onclick="fecharModal()">&times;</span>
       <div class="modal-body">
-        <img id="modal-img" src="" alt="Capa do Filme" />
+        <img id="modal-img" src="" alt="Capa do Filme">
         <div class="modal-info">
           <h2 id="modal-titulo"></h2>
           <p><strong>Ano de Lançamento:</strong> <span id="modal-ano"></span></p>
           <p><strong>Gênero:</strong> <span id="modal-genero"></span></p>
           <p><strong>Sinopse:</strong> <span id="modal-sinopse"></span></p>
-          <p><strong>Nota média:</strong> <span id="modal-nota"></span> <span id="modal-estrelas" class="estrelas"></span></p>
+          <p><strong>Avaliação:</strong></p>
+          <div id="avaliacoesContainer"></div>
+          <div><span id="modal-avaliacao"></span></div>
+          <p>
+            <strong>Nota média:</strong>
+            <span id="modal-nota"></span>
+            <span id="modal-estrelas" class="estrelas"></span>
+          </p>
         </div>
       </div>
     </div>
