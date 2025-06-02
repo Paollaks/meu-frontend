@@ -18,7 +18,7 @@ function buscarFilmes() {
   const termo = document.getElementById('busca')?.value || "";
   const userId = getUserIdFromToken();
   if (!userId) {
-    grid.innerHTML = '<p>Usuário não autenticado.</p>';
+    grid.innerHTML = '<p>Usuário não conectado.</p>';
     return;
   }
   let url = `https://localhost:7252/api/Comentarios/usuario/${userId}/filmes`;
@@ -90,25 +90,83 @@ function abrirModal(filme) {
   // Buscar comentário do usuário logado via API
   const userId = getUserIdFromToken();
   const url = `https://localhost:7252/api/Comentarios?idUsuario=${userId}`;
-  document.getElementById('modal-comentario').textContent = 'Carregando comentário...';
+  const comentarioDiv = document.getElementById('modal-comentario');
+  comentarioDiv.textContent = 'Carregando comentário...';
 
-fetchComToken(url, { method: 'GET' })
+  fetchComToken(url, { method: 'GET' })
     .then(res => res.json())
     .then(data => {
-      // Se vier no formato { $values: [ ... ] }
-      let comentario = 'Nenhum comentário encontrado.';
-      if (data && Array.isArray(data.$values) && data.$values.length > 0) {
-        comentario = data.$values[0].comentario || 'Nenhum comentário encontrado.';
+      // Filtra todos os comentários do usuário para o filme atual
+      const comentariosFilme = (data && Array.isArray(data.$values))
+        ? data.$values.filter(c => c.idFilme === filme.id)
+        : [];
+
+      if (comentariosFilme.length === 0) {
+        comentarioDiv.innerHTML = `<div id="comentario-texto">Nenhum comentário encontrado.</div>`;
+      } else {
+        comentarioDiv.innerHTML = comentariosFilme.map(comentarioObj => `
+        <div class="comentario-item" style="margin-bottom: 10px;">
+          <div id="comentario-texto-${comentarioObj.id}">${comentarioObj.comentario}</div>
+          <div class="comentario-botoes">
+            <button class="btn-editar-comentario" data-id="${comentarioObj.id}">Editar</button>
+            <button class="btn-deletar-comentario" data-id="${comentarioObj.id}">Excluir</button>
+          </div>
+        </div>
+      `).join('');
+
+        // Adiciona eventos para todos os botões de editar
+        comentariosFilme.forEach(comentarioObj => {
+          console.log(comentarioObj);
+          const comentarioId = comentarioObj.id;
+
+          document.querySelector(`.btn-editar-comentario[data-id="${comentarioId}"]`).onclick = function () {
+            const novoComentario = prompt('Editar comentário:', comentarioObj.comentario || comentarioObj.texto);
+            if (novoComentario !== null) {
+              fetchComToken(`https://localhost:7252/api/Comentarios/${comentarioId}`, {
+                method: 'PUT',
+                body: JSON.stringify({
+                  id: comentarioId,
+                  texto: novoComentario,
+                  idUsuario: comentarioObj.idUsuario,
+                  tmdbFilmeId: comentarioObj.tmdbFilmeId ?? comentarioObj.idFilme
+                }),
+              })
+                .then(res => {
+                  if (res.ok) {
+                    document.getElementById(`comentario-texto-${comentarioId}`).textContent = novoComentario;
+                    alert('Comentário atualizado!');
+                  } else {
+                    alert('Erro ao atualizar comentário.');
+                  }
+                });
+            }
+          };
+
+          // Adiciona eventos para todos os botões de deletar
+          document.querySelector(`.btn-deletar-comentario[data-id="${comentarioId}"]`).onclick = function () {
+            if (confirm('Deseja realmente excluir o comentário?')) {
+              fetchComToken(`https://localhost:7252/api/Comentarios/${comentarioId}`, {
+                method: 'DELETE'
+              })
+                .then(res => {
+                  if (res.ok) {
+                    document.getElementById(`comentario-texto-${comentarioId}`).textContent = 'Comentário excluído!';
+                    alert('Comentário excluído!');
+                  } else {
+                    alert('Erro ao excluir comentário.');
+                  }
+                });
+            }
+          };
+        });
       }
-      document.getElementById('modal-comentario').textContent = comentario;
     })
     .catch(() => {
-      document.getElementById('modal-comentario').textContent = 'Erro ao carregar comentário.';
+      comentarioDiv.textContent = 'Erro ao carregar comentário.';
     });
 
   document.getElementById('modal-filme').style.display = 'block';
 }
-
 function fecharModal() {
   document.getElementById('modal-filme').style.display = 'none';
 }

@@ -145,21 +145,24 @@ nav a.active {
 .modal {
   display: none;
   position: fixed;
-  z-index: 1; /* Fica sobre os outros elementos */
+  padding: 80px 0;
+  z-index: 1;
+  /* Fica sobre os outros elementos */
   z-index: 9999;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  overflow: auto; /* Fundo semitransparente */
+  overflow: auto;
+  /* Fundo semitransparente */
   background-color: rgba(0, 0, 0, 0.7);
   font-family: "Instrument Serif", serif;
 }
 
 .modal-content {
   background-color: #f3cfa5;
-  margin: 5% auto;
-  padding: 20px;
+  margin: 6% auto;
+  padding: 28px;
   border-radius: 8px;
   width: 80%;
   max-width: 900px;
@@ -169,7 +172,7 @@ nav a.active {
   display: flex;
   gap: 30px;
   align-items: flex-start;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .modal-body img {
@@ -190,10 +193,22 @@ nav a.active {
   line-height: 1.4;
 }
 
+/*Estrelas e Nota Média*/
 .estrelas {
-  color: orange;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #C87C0C;
   font-size: 1.2em;
-  margin-left: 5px;
+}
+
+#modal-filme .modal-body .modal-img-col p {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center; /* centraliza horizontalmente */
+  gap: 5px; /* espaço entre os itens, opcional */
+  color: #1A1E1F;
 }
 
 .close {
@@ -261,4 +276,54 @@ nav a.active {
   border-radius: 8px;
   text-align: center;
   color: white;
+}
+
+/* Botões dos Comentários */
+
+.comentario-botoes {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+#modal-comentario [id^="comentario-texto-"] {
+  background-color: #4A6C6E;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 16px;
+  color: #1A1E1F;
+}
+
+.btn-editar-comentario {
+  background-color: #4A6C6E;
+  color: #F3D3AA;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 16px;
+  margin: 8px 8px 8px 0;
+  cursor: pointer;
+  font-family: "Instrument Serif", serif;
+  font-size: 16px;
+  transition: background 0.2s;
+}
+
+.btn-editar-comentario:hover {
+  background-color: #406264;
+}
+
+.btn-deletar-comentario {
+  background-color: #B0333B;
+  color: #F3D3AA;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 16px;
+  margin: 8px 0;
+  cursor: pointer;
+  font-family: "Instrument Serif", serif;
+  font-size: 16px;
+  transition: background 0.2s;
+}
+
+.btn-deletar-comentario:hover {
+  background-color: #A62931;
 }
