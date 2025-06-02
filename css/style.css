@@ -149,8 +149,8 @@ nav a.active {
 
 .modal-content {
   background-color: #f3cfa5;
-  margin: 5% auto;
-  padding: 20px;
+  margin: 15% auto;
+  padding: 30px;
   border-radius: 8px;
   width: 80%;
   max-width: 900px;
@@ -160,7 +160,7 @@ nav a.active {
   display: flex;
   gap: 30px;
   align-items: flex-start;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .modal-body img {
@@ -180,11 +180,24 @@ nav a.active {
   line-height: 1.4;
 }
 
+/*Estrelas e Nota Média*/
 .estrelas {
-  color: orange;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #C87C0C;
   font-size: 1.2em;
-  margin-left: 5px;
 }
+
+#modal-filme .modal-body .modal-img-col p {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center; /* centraliza horizontalmente */
+  gap: 5px; /* espaço entre os itens, opcional */
+  color: #1A1E1F;
+}
+
 
 .close {
   float: right;
@@ -251,4 +264,36 @@ nav a.active {
   border-radius: 8px;
   text-align: center;
   color: white;
+}
+
+/*Novo Comentário*/
+#novo-comentario-input{
+  width: 75%;
+  border: none;
+  font-family: "Instrument Serif", serif;
+  background-color: #4A6C6E;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+#novo-comentario-input::placeholder {
+  color: #1A1E1F;
+  font-size: 16px;
+}
+
+#btn-enviar-comentario{
+  background-color: #4A6C6E;
+  color: #F3D3AA;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  margin: 8px 8px 8px 0;
+  cursor: pointer;
+  font-family: "Instrument Serif", serif;
+  font-size: 16px;
+  transition: background 0.2s;
+}
+
+.btn-editar-comentario:hover {
+  background-color: #406264;
 }

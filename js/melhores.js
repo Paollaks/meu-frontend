@@ -2,6 +2,18 @@ const grid = document.getElementById('grid-filmes');
 
 window.onload = exibirFilmesMelhores;
 
+function getUserIdFromToken() {
+  const token = localStorage.getItem('jwtToken');
+  if (!token) return null;
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    // O campo pode ser nameid, sub ou id, dependendo do backend
+    return payload.nameid || payload.sub || payload.id || null;
+  } catch (e) {
+    return null;
+  }
+}
+
 function exibirFilmesMelhores() {
   const termo = document.getElementById('busca')?.value || "";
   let url = 'https://localhost:7252/api/Avaliacoes/top-rated';
@@ -68,6 +80,33 @@ function abrirModal(filme) {
   document.getElementById('modal-nota').textContent = filme.notaMedia?.toFixed(1) || 'N/A';
   document.getElementById('modal-estrelas').innerHTML = gerarEstrelas(filme.notaMedia);
 
+    // Adiciona evento ao botão de comentar
+  document.getElementById('btn-enviar-comentario').onclick = function () {
+    const texto = document.getElementById('novo-comentario-input').value.trim();
+    if (!texto) {
+      alert('Digite um comentário!');
+      return;
+    }
+    const userId = getUserIdFromToken();
+    fetchComToken('https://localhost:7252/api/Comentarios', {
+      method: 'POST',
+      body: JSON.stringify({
+        texto: texto,
+        idUsuario: userId,
+        tmdbFilmeId: filme.id
+      }),
+    })
+      .then(res => {
+        if (res.ok) {
+          alert('Comentário enviado!');
+          fecharModal();
+          abrirModal(filme); // Reabre para atualizar comentários
+        } else {
+          alert('Erro ao enviar comentário.');
+        }
+      });
+  };
+
   document.getElementById('modal-filme').style.display = 'block';
 }
 
@@ -103,14 +142,11 @@ document.addEventListener("click", function(event) {
 });
 
 function fetchComToken(url, options = {}) {
-  const jwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IkxhdXJhMDIwMiIsIm5hbWVpZCI6IjEiLCJuYmYiOjE3NDc2OTk0NTgsImV4cCI6MTc0NzcwNjY1OCwiaWF0IjoxNzQ3Njk5NDU4fQ.Z_bRefL8vPgXF80du8NbVBkRISCDQux1ZnxmrcwBTcI";
-
-  // Adiciona o cabeçalho Authorization com o token
+  const jwtToken = localStorage.getItem('jwtToken');
   const headers = {
     'Authorization': `Bearer ${jwtToken}`,
     'Content-Type': 'application/json',
-    ...options.headers, // Permite sobrescrever ou adicionar outros cabeçalhos
+    ...options.headers,
   };
-
   return fetch(url, { ...options, headers });
 }

@@ -1,23 +1,24 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
   <title>Melhores Avaliados</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/melhoresavaliados.css" />
-  
+
 </head>
 
 <body class="melhoresavaliados">
-  
+
   <header>
-<div class="logo">
-  <a href="../index.html">
-    <img src="../assets/Logo.svg" alt="Logo">
-  </a>
-</div>
+    <div class="logo">
+      <a href="../index.html">
+        <img src="../assets/Logo.svg" alt="Logo">
+      </a>
+    </div>
     <nav>
       <a href="../index.html">Início</a>
       <a href="filmesporgenero.html">Filmes Por Gênero</a>
@@ -39,9 +40,12 @@
 
   <div class="search-bar">
     <input type="text" id="busca-filme" placeholder="Pesquisar filme..." />
-    <button onclick="buscarFilmes(document.getElementById('grid-melhores'), document.getElementById('busca-filme').value)" class="lupa-btn" aria-label="Pesquisar filme">
+    <button
+      onclick="buscarFilmes(document.getElementById('grid-melhores'), document.getElementById('busca-filme').value)"
+      class="lupa-btn" aria-label="Pesquisar filme">
       <svg class="icon-lupa" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        <path fill="white" d="M10 2a8 8 0 105.293 14.293l4.707 4.707 1.414-1.414-4.707-4.707A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z"/>
+        <path fill="white"
+          d="M10 2a8 8 0 105.293 14.293l4.707 4.707 1.414-1.414-4.707-4.707A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z" />
       </svg>
     </button>
   </div>
@@ -55,25 +59,30 @@
     <div class="modal-content">
       <span class="close" onclick="fecharModal()">&times;</span>
       <div class="modal-body">
-        <img id="modal-img" src="" alt="Capa do Filme">
+        <div class="modal-img-col">
+          <img id="modal-img" src="" alt="Capa do Filme">
+          <p>
+            <strong id="nota">Nota média:</strong>
+            <span id="modal-estrelas" class="estrelas"></span>
+            <span id="modal-nota"></span>
+          </p>
+        </div>
         <div class="modal-info">
           <h2 id="modal-titulo"></h2>
           <p><strong>Ano de Lançamento:</strong> <span id="modal-ano"></span></p>
           <p><strong>Gênero:</strong> <span id="modal-genero"></span></p>
           <p><strong>Sinopse:</strong> <span id="modal-sinopse"></span></p>
-          <p><strong>Avaliação:</strong></p>
-          <div id="avaliacoesContainer"></div>
-          <div><span id="modal-avaliacao"></span></div>
-          <p>
-            <strong>Nota média:</strong>
-            <span id="modal-nota"></span>
-            <span id="modal-estrelas" class="estrelas"></span>
-          </p>
+          <div id="novo-comentario-container">
+            <p><strong>O que você acha dessa Obra?</strong></p>
+            <input type="text" id="novo-comentario-input" placeholder="Escreva seu comentário..." />
+            <button id="btn-enviar-comentario">Salvar avaliação</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <script src="../js/melhores.js"></script>
+    <script src="../js/melhores.js"></script>
 </body>
+
 </html>

@@ -20,6 +20,18 @@ document.addEventListener("DOMContentLoaded", () => {
   carregarFilmesPorGenero('37', 'grid-faroeste');      // Faroeste
 });
 
+function getUserIdFromToken() {
+  const token = localStorage.getItem('jwtToken');
+  if (!token) return null;
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    // O campo pode ser nameid, sub ou id, dependendo do backend
+    return payload.nameid || payload.sub || payload.id || null;
+  } catch (e) {
+    return null;
+  }
+}
+
 function carregarFilmesPorGenero(generoId, containerId) {
   fetch(`https://localhost:7252/api/Filmes/genero/${generoId}`)
     .then(res => {
@@ -102,6 +114,33 @@ function abrirModal(filme) {
   document.getElementById('modal-nota').textContent = filme.notaMedia?.toFixed(1) || 'N/A';
   document.getElementById('modal-estrelas').innerHTML = gerarEstrelas(filme.notaMedia);
 
+  // Adiciona evento ao botão de comentar
+  document.getElementById('btn-enviar-comentario').onclick = function () {
+    const texto = document.getElementById('novo-comentario-input').value.trim();
+    if (!texto) {
+      alert('Digite um comentário!');
+      return;
+    }
+    const userId = getUserIdFromToken();
+    fetchComToken('https://localhost:7252/api/Comentarios', {
+      method: 'POST',
+      body: JSON.stringify({
+        texto: texto,
+        idUsuario: userId,
+        tmdbFilmeId: filme.id
+      }),
+    })
+      .then(res => {
+        if (res.ok) {
+          alert('Comentário enviado!');
+          fecharModal();
+          abrirModal(filme); // Reabre para atualizar comentários
+        } else {
+          alert('Erro ao enviar comentário.');
+        }
+      });
+  };
+
   document.getElementById('modal-filme').style.display = 'block';
 }
 
@@ -120,7 +159,7 @@ function toggleMenu() {
 }
 
 // Fecha o menu se clicar fora
-document.addEventListener("click", function(event) {
+document.addEventListener("click", function (event) {
   const userMenu = document.querySelector(".user-menu");
   const dropdown = document.getElementById("dropdown-menu");
 
@@ -128,3 +167,13 @@ document.addEventListener("click", function(event) {
     dropdown.style.display = "none";
   }
 });
+
+function fetchComToken(url, options = {}) {
+  const jwtToken = localStorage.getItem('jwtToken');
+  const headers = {
+    'Authorization': `Bearer ${jwtToken}`,
+    'Content-Type': 'application/json',
+    ...options.headers,
+  };
+  return fetch(url, { ...options, headers });
+}
