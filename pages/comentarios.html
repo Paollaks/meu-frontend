@@ -30,55 +30,61 @@
       <div class="user-dropdown" id="dropdown-menu">
         <a href="perfil-usuario.html">Perfil</a>
         <a href="./comentarios.html" class="active">Avaliadas</a>
-        <a href="./favoritadas.html">Favoritados</a>
+        <a href="./favoritadas.html">Favoritadas</a>
         <a href="./login-usuario.html">Desconectar</a>
       </div>
     </div>
 
   </header>
 
-  <div class="search-bar">
-    <input type="text" id="busca" placeholder="Pesquisar filmes...">
-    <button onclick="buscarFilmes()" class="search-btn" aria-label="Buscar">
-      <svg class="icon-lupa" xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20">
-        <circle cx="10" cy="10" r="7" stroke="white" stroke-width="2" fill="none" />
-        <line x1="15" y1="15" x2="22" y2="22" stroke="white" stroke-width="2" />
-      </svg>
-    </button>
+  <div class="comentarios" id="comentarios-header">
+    <p class="titulo">Avaliadas</p>
+    <div class="search-bar">
+      <input type="text" id="busca" placeholder="Pesquisar obras...">
+      <button onclick="buscarFilmes()" class="search-btn" aria-label="Buscar">
+        <svg class="icon-lupa" xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20">
+          <circle cx="10" cy="10" r="7" stroke="white" stroke-width="2" fill="none" />
+          <line x1="15" y1="15" x2="22" y2="22" stroke="white" stroke-width="2" />
+        </svg>
+      </button>
+    </div>
   </div>
 
 
-  <div class="grid" id="grid-filmes">
-    <!-- Os filmes serão inseridos aqui -->
-  </div>
+    <div class="grid" id="grid-filmes">
+      <!-- Os filmes serão inseridos aqui -->
+    </div>
 
-  <!-- Modal de Detalhes do Filme -->
-  <div id="modal-filme" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="fecharModal()">&times;</span>
-      <div class="modal-body">
-        <div class="modal-img-col">
-          <img id="modal-img" src="" alt="Capa do Filme">
-          <p>
-            <strong id="nota">Nota média:</strong>
-            <span id="modal-estrelas" class="estrelas"></span>
-            <span id="modal-nota"></span>
-          </p>
-        </div>
-        <div class="modal-info">
-          <h2 id="modal-titulo"></h2>
-          <p><strong>Ano de Lançamento:</strong> <span id="modal-ano"></span></p>
-          <p><strong>Gênero:</strong> <span id="modal-genero"></span></p>
-          <p><strong>Sinopse:</strong> <span id="modal-sinopse"></span></p>
-          <p><strong>Avaliação:</strong></p>
-          <div>
-            <p id="modal-comentario"></p>
+    <!-- Modal de Detalhes do Filme -->
+    <div id="modal-filme" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="fecharModal()">&times;</span>
+        <div class="modal-body">
+          <div class="modal-img-col" style="position: relative;">
+            <img id="modal-img" src="" alt="Capa do Filme">
+            <button id="btn-favoritar" aria-label="Favoritar" class="btn-favoritar">
+              <img id="icone-favorito" src="../assets/CoraçãoVazio.svg" alt="Favoritar">
+            </button>
+            <p>
+              <strong id="nota">Nota média:</strong>
+              <span id="modal-estrelas" class="estrelas"></span>
+              <span id="modal-nota"></span>
+            </p>
+          </div>
+          <div class="modal-info">
+            <h2 id="modal-titulo"></h2>
+            <p><strong>Ano de Lançamento:</strong> <span id="modal-ano"></span></p>
+            <p><strong>Gênero:</strong> <span id="modal-genero"></span></p>
+            <p><strong>Sinopse:</strong> <span id="modal-sinopse"></span></p>
+            <p><strong>Avaliação:</strong></p>
+            <div>
+              <p id="modal-comentario"></p>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <script src="../js/comentarios.js"></script>
+    <script src="../js/comentarios.js"></script>
 
 </body>

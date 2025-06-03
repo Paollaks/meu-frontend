@@ -14,6 +14,10 @@ function getUserIdFromToken() {
   }
 }
 
+const userId = getUserIdFromToken();
+const btnFavoritar = document.getElementById('btn-favoritar');
+const iconeFavorito = document.getElementById('icone-favorito');
+
 function buscarFilmes() {
   const termo = document.getElementById('busca')?.value || "";
   const userId = getUserIdFromToken();
@@ -59,13 +63,64 @@ function buscarFilmes() {
         div.className = 'filme';
         div.onclick = () => abrirModal(filme);
 
+        // Container para imagem e botão de favoritar
+        const imgContainer = document.createElement('div');
+        imgContainer.className = 'img-container';
+
         const img = document.createElement('img');
         img.src = filme.fotoUrl && filme.fotoUrl.includes('/t/p/')
           ? filme.fotoUrl
           : 'https://via.placeholder.com/140x200';
         img.alt = filme.titulo;
 
-        div.appendChild(img);
+        // Botão de favoritar
+        const btnFavoritar = document.createElement('button');
+        btnFavoritar.className = 'btn-favoritar-grid';
+        btnFavoritar.setAttribute('aria-label', 'Favoritar');
+        btnFavoritar.innerHTML = `<img src="../assets/CoraçãoVazio.svg" alt="Favoritar" width="40" height="40">`;
+
+        // Verifica se já está favoritado
+        fetchComToken(`https://localhost:7252/api/Favoritos?idUsuario=${userId}`)
+          .then(res => res.json())
+          .then(data => {
+            const jaFavoritado = data.$values?.some(fav => fav.idFilme === filme.id);
+            btnFavoritar.querySelector('img').src = jaFavoritado ? '../assets/CoraçãoPrenchido.svg' : '../assets/CoraçãoVazio.svg';
+            btnFavoritar.setAttribute('data-favoritado', jaFavoritado ? 'true' : 'false');
+          });
+
+        // Evento de clique no botão de favoritar
+        btnFavoritar.onclick = function (e) {
+          e.stopPropagation(); // Evita abrir o modal ao clicar no botão
+          const favoritado = btnFavoritar.getAttribute('data-favoritado') === 'true';
+          if (!favoritado) {
+            fetchComToken('https://localhost:7252/api/Favoritos', {
+              method: 'POST',
+              body: JSON.stringify({
+                idUsuario: userId,
+                idFilme: filme.id
+              }),
+            }).then(res => {
+              if (res.ok) {
+                btnFavoritar.querySelector('img').src = '../assets/CoraçãoPrenchido.svg';
+                btnFavoritar.setAttribute('data-favoritado', 'true');
+              }
+            });
+          } else {
+            fetchComToken(`https://localhost:7252/api/Favoritos/${userId}/${filme.id}`, {
+              method: 'DELETE'
+            }).then(res => {
+              if (res.ok) {
+                btnFavoritar.querySelector('img').src = '../assets/CoraçãoVazio.svg';
+                btnFavoritar.setAttribute('data-favoritado', 'false');
+              }
+            });
+          }
+        };
+
+        imgContainer.appendChild(img);
+        imgContainer.appendChild(btnFavoritar);
+        div.appendChild(imgContainer);
+
         grid.appendChild(div);
       });
     })
@@ -77,6 +132,7 @@ function buscarFilmes() {
 
 // 🔽 Modal - funções no final do arquivo
 function abrirModal(filme) {
+  const userId = getUserIdFromToken();
   document.getElementById('modal-img').src = filme.fotoUrl && filme.fotoUrl.includes('/t/p/')
     ? filme.fotoUrl
     : 'https://via.placeholder.com/250x350';
@@ -88,7 +144,10 @@ function abrirModal(filme) {
   document.getElementById('modal-estrelas').innerHTML = gerarEstrelas(filme.notaMedia);
 
   // Buscar comentário do usuário logado via API
-  const userId = getUserIdFromToken();
+  if (!userId) {
+    alert('Usuário não conectado.');
+    return;
+  }
   const url = `https://localhost:7252/api/Comentarios?idUsuario=${userId}`;
   const comentarioDiv = document.getElementById('modal-comentario');
   comentarioDiv.textContent = 'Carregando comentário...';
@@ -164,6 +223,51 @@ function abrirModal(filme) {
     .catch(() => {
       comentarioDiv.textContent = 'Erro ao carregar comentário.';
     });
+
+  // Função para verificar se o filme já está favoritado
+  function verificarFavorito() {
+    fetchComToken(`https://localhost:7252/api/Favoritos?idUsuario=${userId}`)
+      .then(res => res.json())
+      .then(data => {
+        // Supondo que data.$values é um array de favoritos
+        const jaFavoritado = data.$values?.some(fav => fav.idFilme === filme.id);
+        iconeFavorito.src = jaFavoritado ? '../assets/CoraçãoPrenchido.svg' : '../assets/CoraçãoVazio.svg';
+        btnFavoritar.setAttribute('data-favoritado', jaFavoritado ? 'true' : 'false');
+      });
+  }
+
+  verificarFavorito();
+
+  // Evento de clique
+  btnFavoritar.onclick = function () {
+    const favoritado = btnFavoritar.getAttribute('data-favoritado') === 'true';
+    if (!favoritado) {
+      // POST para favoritar
+      fetchComToken('https://localhost:7252/api/Favoritos', {
+        method: 'POST',
+        body: JSON.stringify({
+          idUsuario: userId,
+          idFilme: filme.id
+        }),
+      }).then(res => {
+        if (res.ok) {
+          iconeFavorito.src = '../assets/CoraçãoPrenchido.svg';
+          btnFavoritar.setAttribute('data-favoritado', 'true');
+        }
+      });
+    } else {
+      // DELETE para desfavoritar
+      fetchComToken(`https://localhost:7252/api/Favoritos/${userId}/${filme.id}`, {
+        method: 'DELETE'
+      }).then(res => {
+        if (res.ok) {
+          iconeFavorito.src = '../assets/CoraçãoVazio.svg';
+          btnFavoritar.setAttribute('data-favoritado', 'false');
+          location.reload(); // Recarrega a página para atualizar a lista
+        }
+      });
+    }
+  };
 
   document.getElementById('modal-filme').style.display = 'block';
 }

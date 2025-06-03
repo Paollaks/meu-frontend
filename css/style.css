@@ -95,20 +95,47 @@ nav a.active {
 }
 
 .filme {
-  background-color: #ccc;
-  border-radius: 8px;
+  background: none;
   overflow: hidden;
   transition: transform 0.2s ease;
   cursor: pointer;
 }
 
 .filme img {
+  border-radius: 14px;
   width: 100%;
   height: auto;
   object-fit: contain;
   display: block;
   aspect-ratio: 2 / 3;
   background-color: #222;
+}
+
+/*botão de favoritar fora do modal*/
+.img-container {
+  background: none;
+  position: relative;
+  display: inline-block;
+}
+
+.btn-favoritar-grid {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  z-index: 2;
+}
+
+.btn-favoritar-grid img {
+  background: none;
+  width: 40px;
+  height: 40px;
+  pointer-events: none;
 }
 
 .filme:hover {
@@ -170,6 +197,27 @@ nav a.active {
   border-radius: 4px;
 }
 
+/*botão de favoritar*/
+.btn-favoritar {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 148px;
+  z-index: 2;
+}
+
+.btn-favoritar img {
+  width: 40px;
+  height: 40px;
+  background: none;
+  pointer-events: none;
+}
+
 .modal-info h2 {
   margin-top: 0;
   color: #1f1f1f;
@@ -193,8 +241,10 @@ nav a.active {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center; /* centraliza horizontalmente */
-  gap: 5px; /* espaço entre os itens, opcional */
+  justify-content: center;
+  /* centraliza horizontalmente */
+  gap: 5px;
+  /* espaço entre os itens, opcional */
   color: #1A1E1F;
 }
 
@@ -267,7 +317,7 @@ nav a.active {
 }
 
 /*Novo Comentário*/
-#novo-comentario-input{
+#novo-comentario-input {
   width: 75%;
   border: none;
   font-family: "Instrument Serif", serif;
@@ -281,7 +331,7 @@ nav a.active {
   font-size: 16px;
 }
 
-#btn-enviar-comentario{
+#btn-enviar-comentario {
   background-color: #4A6C6E;
   color: #F3D3AA;
   border: none;

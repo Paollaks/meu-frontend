@@ -31,7 +31,7 @@
         <div class="user-dropdown" id="dropdown-menu">
           <a href="perfil-usuario.html">Perfil</a>
           <a href="comentarios.html">Avaliações</a>
-          <a href="favoritadas.html">Favoritados</a>
+          <a href="favoritadas.html">Favoritadas</a>
           <a href="login-usuario.html">Desconectar</a>
         </div>
       </div>
@@ -39,7 +39,7 @@
   </header>
 
   <div class="search-bar">
-    <input type="text" id="busca-filme" placeholder="Pesquisar filme..." />
+    <input type="text" id="busca-filme" placeholder="Pesquisar obras..." />
     <button
       onclick="buscarFilmes(document.getElementById('grid-melhores'), document.getElementById('busca-filme').value)"
       class="lupa-btn" aria-label="Pesquisar filme">
@@ -59,8 +59,11 @@
     <div class="modal-content">
       <span class="close" onclick="fecharModal()">&times;</span>
       <div class="modal-body">
-        <div class="modal-img-col">
+        <div class="modal-img-col" style="position: relative;">
           <img id="modal-img" src="" alt="Capa do Filme">
+          <button id="btn-favoritar" aria-label="Favoritar" class="btn-favoritar">
+            <img id="icone-favorito" src="assets/CoraçãoVazio.svg" alt="Favoritar">
+          </button>
           <p>
             <strong id="nota">Nota média:</strong>
             <span id="modal-estrelas" class="estrelas"></span>
@@ -82,7 +85,7 @@
     </div>
   </div>
 
-    <script src="../js/melhores.js"></script>
+  <script src="../js/melhores.js"></script>
 </body>
 
 </html>
