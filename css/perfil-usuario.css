@@ -82,8 +82,11 @@ nav a.active {
   padding: 20px;
 }
 
-.perfil-lateral span {
+.perfil-lateral h3 {
   font-size: 30px;
+  color: #000000;
+  margin: 8px 0;
+  text-align: center;
 }
 
 .perfil-lateral button {
@@ -132,19 +135,60 @@ h2 {
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 20px;
+  gap: 10px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   background-color: #1F1F1F;
-  padding: 20px;
+  padding: 10px;
+  margin: 0;
   border-radius: 8px;
 }
 
 .grid .filme {
-  background-color: #ddd;
   width: 100%;
-  height: 160px;
-  border-radius: 4px;
+  height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
 }
+
+.grid .filme img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.obras-container {
+  display: flex;
+  gap: 32px;
+  margin-bottom: 30px;
+}
+
+.header {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.header h2 {
+  margin: 0 0 10px 0;
+  font-size: 24px;
+}
+
 
 /* Ícone de perfil com menu suspenso */
 .user-menu {

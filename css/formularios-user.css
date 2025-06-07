@@ -113,15 +113,15 @@ hr {
 
 .footer {
   text-align: center;
-  margin-top: 30px;
-  color: #a8b2b3;
-  font-size: 14px;
+  color: #B0333B;
+  font-size: 16px;
 }
 
-.footer a {
-  color: #4da6ff;
-  text-decoration: none;
-  font-weight: 500;
+.footer-row {
+  display: flex;
+  margin: 8px;
+  justify-content: center;
+  gap: 150px;
 }
 
 .footer a:hover {
