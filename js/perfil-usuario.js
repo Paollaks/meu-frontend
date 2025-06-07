@@ -140,6 +140,9 @@ function carregarAvaliacoes() {
         div.innerHTML = `<img src="${f.fotoUrl}" alt="${f.titulo}" />`;
         container.appendChild(div);
       });
+      container.onclick = () => {
+        window.location.href = 'comentarios.html';
+      };
     })
     .catch(err => console.error("Erro ao carregar avaliações:", err));
 }
