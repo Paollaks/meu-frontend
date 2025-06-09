@@ -32,6 +32,15 @@ function getUserIdFromToken() {
   }
 }
 
+document.getElementById('perfil-link').addEventListener('click', function (e) {
+  // Verifica se o token existe
+  if (!localStorage.getItem('jwtToken')) {
+    e.preventDefault();
+    window.location.href = "login-usuario.html";
+  }
+  // Se o token existir, o botão funciona normalmente
+});
+
 const userId = getUserIdFromToken();
 const btnFavoritar = document.getElementById('btn-favoritar');
 const iconeFavorito = document.getElementById('icone-favorito');
@@ -275,3 +284,9 @@ function fetchComToken(url, options = {}) {
   };
   return fetch(url, { ...options, headers });
 }
+
+document.getElementById('logout-link').addEventListener('click', function (e) {
+  e.preventDefault();
+  localStorage.removeItem('jwtToken');
+  window.location.href = "login-usuario.html";
+});

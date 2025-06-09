@@ -64,14 +64,20 @@ nav a.active {
   display: flex;
   gap: 40px;
   padding: 40px;
+  min-height: 100vh;
+  box-sizing: border-box;
+  /* Garante que padding não estoure a tela */
 }
 
 .perfil-lateral {
   display: flex;
   flex-direction: column;
   align-items: center;
+  align-self: stretch;
   width: 220px;
   gap: 20px;
+  min-height: 0;
+  box-sizing: border-box;
 }
 
 .perfil-lateral img {
@@ -89,16 +95,29 @@ nav a.active {
   text-align: center;
 }
 
-.perfil-lateral button {
+.perfil-container button {
   width: 180px;
   padding: 12px;
-  margin: 5px 0;
+  margin-bottom: 0px;
   background-color: #1F1F1F;
   color: #bb5050;
   border: none;
   cursor: pointer;
   font-size: 18px;
-  font-family: serif;
+  font-family: "Instrument Serif", serif;
+}
+
+#alterar-dados {
+  margin-left: 87%;
+  align-self: flex-end;
+}
+
+#excluir-conta {
+  margin-top: auto;
+  margin-bottom: 35px;
+  width: 100%;
+  max-width: 180px;
+  box-sizing: border-box;
 }
 
 .perfil-lateral button:hover {

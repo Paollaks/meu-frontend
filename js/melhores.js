@@ -14,6 +14,15 @@ function getUserIdFromToken() {
   }
 }
 
+document.getElementById('perfil-link').addEventListener('click', function (e) {
+  // Verifica se o token existe
+  if (!localStorage.getItem('jwtToken')) {
+    e.preventDefault();
+    window.location.href = "login-usuario.html";
+  }
+  // Se o token existir, o botão funciona normalmente
+});
+
 const userId = getUserIdFromToken();
 const btnFavoritar = document.getElementById('btn-favoritar');
 const iconeFavorito = document.getElementById('icone-favorito');
@@ -219,11 +228,14 @@ function gerarEstrelas(nota) {
   return Array.from({ length: 5 }, (_, i) => i < estrelasCheias ? '★' : '☆').join('');
 }
 
-document.getElementById('busca').addEventListener('keydown', function (e) {
-  if (e.key === 'Enter') {
-    buscarFilmes();
-  }
-});
+const buscaInput = document.getElementById('busca-filme');
+if (buscaInput) {
+  buscaInput.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+      buscarFilmes();
+    }
+  });
+}
 
 function toggleMenu() {
   const menu = document.getElementById("dropdown-menu");
@@ -249,3 +261,9 @@ function fetchComToken(url, options = {}) {
   };
   return fetch(url, { ...options, headers });
 }
+
+document.getElementById('logout-link').addEventListener('click', function (e) {
+  e.preventDefault();
+  localStorage.removeItem('jwtToken');
+  window.location.href = "login-usuario.html";
+});
