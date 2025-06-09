@@ -16,7 +16,7 @@ body.index .grid {
 
 /* Cabeçalho */
 header {
-  background-color: #1F1F1F;
+  background-color: #1A1E1F;
   padding: 15px 20px;
   display: flex;
   justify-content: space-between;
@@ -47,21 +47,40 @@ nav a {
   font-size: 30px;
 }
 
-nav a:hover, nav a.active {
+nav a:hover,
+nav a.active {
   text-decoration: underline #F3D3AA;
   text-decoration-thickness: 2px;
   text-underline-offset: 7px;
+}
+
+/*título*/
+#favoritadas-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+#favoritadas-header .titulo {
+  color: #1A1E1F;
+  font-weight: bold;
+  font-size: 50px;
+  margin-left: 50px;
 }
 
 /* Barra de busca */
 .search-bar {
   display: flex;
   justify-content: center;
-  margin: 20px;
+  min-width: 320px;
+  flex: 1;
+  margin-right: 35px;
 }
 
 .search-bar input {
-  width: 80%;
+  width: 100%;
+  min-width: 0;
   padding: 10px;
   border-radius: 20px 0 0 20px;
   border: none;
@@ -74,9 +93,15 @@ nav a:hover, nav a.active {
   background: black;
   border-radius: 0 20px 20px 0;
   cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.filme-card:hover {
+  transform: scale(1.05);
 }
 
 .icon-lupa {
@@ -88,26 +113,53 @@ nav a:hover, nav a.active {
 /* Grid de filmes */
 .grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   gap: 20px;
   padding: 0 20px 40px;
 }
 
 .filme {
-  background-color: #ccc;
-  border-radius: 8px;
+  background: none;
   overflow: hidden;
   transition: transform 0.2s ease;
   cursor: pointer;
 }
 
 .filme img {
+  border-radius: 14px;
   width: 100%;
   height: auto;
   object-fit: contain;
   display: block;
   aspect-ratio: 2 / 3;
   background-color: #222;
+}
+
+/*botão de favoritar fora do modal*/
+.img-container {
+  background: none;
+  position: relative;
+  display: inline-block;
+}
+
+.btn-favoritar-grid {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  z-index: 2;
+}
+
+.btn-favoritar-grid img {
+  background: none;
+  width: 40px;
+  height: 40px;
+  pointer-events: none;
 }
 
 .filme:hover {
@@ -126,6 +178,7 @@ nav a:hover, nav a.active {
   font-size: 20px;
 }
 
+/* Estilos do modal */
 .genero-header span {
   cursor: pointer;
   font-weight: bold;
@@ -136,20 +189,24 @@ nav a:hover, nav a.active {
 .modal {
   display: none;
   position: fixed;
+  padding: 80px 0;
+  z-index: 1;
+  /* Fica sobre os outros elementos */
   z-index: 9999;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
   overflow: auto;
+  /* Fundo semitransparente */
   background-color: rgba(0, 0, 0, 0.7);
   font-family: "Instrument Serif", serif;
 }
 
 .modal-content {
   background-color: #f3cfa5;
-  margin: 5% auto;
-  padding: 20px;
+  margin: 6% auto;
+  padding: 28px;
   border-radius: 8px;
   width: 80%;
   max-width: 900px;
@@ -159,14 +216,36 @@ nav a:hover, nav a.active {
   display: flex;
   gap: 30px;
   align-items: flex-start;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .modal-body img {
   width: 250px;
   height: auto;
+  border-radius: 8px;
   background: #ccc;
   border-radius: 4px;
+}
+
+/*botão de favoritar*/
+.btn-favoritar {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 148px;
+  z-index: 2;
+}
+
+.btn-favoritar img {
+  width: 40px;
+  height: 40px;
+  background: none;
+  pointer-events: none;
 }
 
 .modal-info h2 {
@@ -179,10 +258,24 @@ nav a:hover, nav a.active {
   line-height: 1.4;
 }
 
+/*Estrelas e Nota Média*/
 .estrelas {
-  color: orange;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #C87C0C;
   font-size: 1.2em;
-  margin-left: 5px;
+}
+
+#modal-filme .modal-body .modal-img-col p {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  /* centraliza horizontalmente */
+  gap: 5px;
+  /* espaço entre os itens, opcional */
+  color: #1A1E1F;
 }
 
 .close {
@@ -252,32 +345,34 @@ nav a:hover, nav a.active {
   color: white;
 }
 
-
-/* Botão de favoritar CSS */
-.btn-favorito {
-  background: none;
+/*Novo Comentário*/
+#novo-comentario-input {
+  width: 75%;
   border: none;
+  font-family: "Instrument Serif", serif;
+  background-color: #4A6C6E;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+#novo-comentario-input::placeholder {
+  color: #1A1E1F;
+  font-size: 16px;
+}
+
+#btn-enviar-comentario {
+  background-color: #4A6C6E;
+  color: #F3D3AA;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  margin: 8px 8px 8px 0;
   cursor: pointer;
-  font-size: 20px;
-  color: red;
-  margin-top: 5px;
+  font-family: "Instrument Serif", serif;
+  font-size: 16px;
+  transition: background 0.2s;
 }
 
-.btn-favorito:hover {
-  transform: scale(1.2);
-}
-
-.btn-favorito-modal {
-    background: none;
-    border: 1px solid red;
-    color: red;
-    padding: 10px 15px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-.btn-favorito-modal:hover {
-    background: red;
-    color: white;
+.btn-editar-comentario:hover {
+  background-color: #406264;
 }

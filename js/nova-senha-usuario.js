@@ -5,32 +5,40 @@ document.addEventListener('DOMContentLoaded', function () {
     e.preventDefault();
 
     const email = document.getElementById('email').value.trim();
-    const senhaAtual = document.getElementById('senhaAtual').value.trim();
     const novaSenha = document.getElementById('novaSenha').value.trim();
     const token = localStorage.getItem('jwtToken');
 
-    if (!email || !senhaAtual || !novaSenha) {
+    if (!email || !novaSenha) {
       alert('Por favor, preencha todos os campos!');
       return;
     }
 
-    if (!token) {
-      alert('Você precisa estar logado para alterar a senha.');
-      return;
-    }
+    let userId = null;
 
-    // Decodifica o token para pegar o userId
-    let userId;
-    try {
-      const decoded = jwt_decode(token);
-      userId = decoded.nameid || decoded.NameIdentifier || decoded['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
-    } catch (err) {
-      alert('Token inválido. Faça login novamente.');
-      return;
+    if (token) {
+      // Decodifica o token para pegar o userId
+      try {
+        const decoded = jwt_decode(token);
+        userId = decoded.nameid || decoded.NameIdentifier || decoded['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
+      } catch (err) {
+        // Se o token estiver inválido, segue para buscar pelo e-mail
+      }
     }
 
     if (!userId) {
-      alert('Usuário inválido. Faça login novamente.');
+      try {
+        const res = await fetch(`https://localhost:7252/api/Usuarios/public-by-email?email=${email}`);
+        if (!res.ok) throw new Error();
+        const usuario = await res.json();
+        userId = usuario.id;
+      } catch {
+        alert('Não foi possível localizar o usuário pelo e-mail informado.');
+        return;
+      }
+    }
+
+    if (!userId) {
+      alert('Usuário inválido. Verifique o e-mail informado.');
       return;
     }
 
@@ -39,13 +47,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     try {
       const response = await fetch(`https://localhost:7252/api/Usuarios/${userId}/alterar-senha`, {
-        method: 'POST',
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {})
         },
         body: JSON.stringify({
-          senhaAtual: senhaAtual,
+          email: email,
           novaSenha: novaSenha
         })
       });
@@ -55,7 +63,6 @@ document.addEventListener('DOMContentLoaded', function () {
           window.location.href = 'perfil-usuario.html';
         }
       } else {
-        // tenta pegar mensagem de erro do backend
         const erro = await response.json().catch(() => null);
         alert(erro?.title || erro?.message || 'Erro ao alterar senha.');
       }

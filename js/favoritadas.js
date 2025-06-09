@@ -2,13 +2,43 @@ const grid = document.getElementById('grid-filmes');
 
 window.onload = buscarFilmes;
 
-function buscarFilmes() {
-    const termo = document.getElementById('busca')?.value || "";
-    let url = 'https://localhost:7252/api/Favoritos/usuario/1/filmes';
+function getUserIdFromToken() {
+  const token = localStorage.getItem('jwtToken');
+  if (!token) return null;
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    // O campo pode ser nameid, sub ou id, dependendo do backend
+    return payload.nameid || payload.sub || payload.id || null;
+  } catch (e) {
+    return null;
+  }
+}
 
-    if (termo.trim() !== "") {
-        url += `?termo=${encodeURIComponent(termo)}`;
-    }
+document.getElementById('perfil-link').addEventListener('click', function (e) {
+  // Verifica se o token existe
+  if (!localStorage.getItem('jwtToken')) {
+    e.preventDefault();
+    window.location.href = "login-usuario.html";
+  }
+  // Se o token existir, o botão funciona normalmente
+});
+
+const userId = getUserIdFromToken();
+const btnFavoritar = document.getElementById('btn-favoritar');
+const iconeFavorito = document.getElementById('icone-favorito');
+
+function buscarFilmes() {
+  const termo = document.getElementById('busca')?.value || "";
+  const userId = getUserIdFromToken();
+  if (!userId) {
+    grid.innerHTML = '<p>Usuário não conectado.</p>';
+    return;
+  }
+  let url = `https://localhost:7252/api/Favoritos/usuario/${userId}/filmes`;
+
+  if (termo.trim() !== "") {
+    url += `?termo=${encodeURIComponent(termo)}`;
+  }
 
   fetchComToken(url, { method: 'GET' })
     .then(res => {
@@ -17,174 +47,200 @@ function buscarFilmes() {
       }
       return res.json();
     })
-        .then(dados => {
-            const filmes =
-                Array.isArray(dados) ? dados :
-                    Array.isArray(dados.$values) ? dados.$values :
-                        Array.isArray(dados.value) ? dados.value :
-                            null;
+    .then(dados => {
+      const filmes =
+        Array.isArray(dados) ? dados :
+          Array.isArray(dados.$values) ? dados.$values :
+            Array.isArray(dados.value) ? dados.value :
+              null;
 
-            if (!Array.isArray(filmes)) {
-                grid.innerHTML = '<p>Erro: formato de resposta inválido.</p>';
-                console.error("Resposta inesperada da API:", dados);
-                return;
-            }
-
-            grid.innerHTML = '';
-
-            if (filmes.length === 0) {
-                grid.innerHTML = '<p>Nenhum filme encontrado.</p>';
-                return;
-            }
-
-            filmes.forEach(filme => {
-                const div = document.createElement('div');
-                div.className = 'filme';
-                div.onclick = () => abrirModal(filme);
-
-                const img = document.createElement('img');
-                img.src = filme.fotoUrl && filme.fotoUrl.includes('/t/p/')
-                    ? filme.fotoUrl
-                    : 'https://via.placeholder.com/140x200';
-                img.alt = filme.titulo;
-
-                // Botão de coração
-                const btnFavorito = document.createElement('button');
-                btnFavorito.className = 'btn-favorito';
-                btnFavorito.innerHTML = '❤️';
-                btnFavorito.onclick = (e) => {
-                    e.stopPropagation(); // Impede que o clique abra o modal
-                    adicionarAosFavoritos(filme.idFilme);
-                };
-
-                div.appendChild(img);
-                div.appendChild(btnFavorito); // Adiciona o botão ao card do filme
-                grid.appendChild(div);
-            });
-        })
-        .catch(err => {
-            console.error('Erro ao buscar filmes:', err);
-            grid.innerHTML = '<p>Erro ao carregar filmes.</p>';
-        });
-}
-
-// Função para adicionar o filme aos favoritos
-function adicionarAosFavoritos(idFilme) {
-  const url = `https://localhost:7252/api/favoritos`; // URL do endpoint do backend
-  const payload = { idFilme, idUsuario: 1 }; 
-
-  fetchComToken(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(payload), // Converte o objeto para JSON
-  })
-    .then(res => {
-      if (!res.ok) {
-        throw new Error(`Erro ao adicionar aos favoritos: ${res.status}`);
+      if (!Array.isArray(filmes)) {
+        grid.innerHTML = '<p>Erro: formato de resposta inválido.</p>';
+        console.error("Resposta inesperada da API:", dados);
+        return;
       }
-      return res.json();
-    })
-    .then(() => {
-      alert('Filme adicionado aos favoritos com sucesso!');
+
+      grid.innerHTML = '';
+
+      if (filmes.length === 0) {
+        grid.innerHTML = '<p>Nenhum filme encontrado.</p>';
+        return;
+      }
+
+      filmes.forEach(filme => {
+        const div = document.createElement('div');
+        div.className = 'filme';
+        div.onclick = () => abrirModal(filme);
+
+        // Container para imagem e botão de favoritar
+        const imgContainer = document.createElement('div');
+        imgContainer.className = 'img-container';
+
+        const img = document.createElement('img');
+        img.src = filme.fotoUrl && filme.fotoUrl.includes('/t/p/')
+          ? filme.fotoUrl
+          : 'https://via.placeholder.com/140x200';
+        img.alt = filme.titulo;
+
+        // Botão de favoritar
+        const btnFavoritar = document.createElement('button');
+        btnFavoritar.className = 'btn-favoritar-grid';
+        btnFavoritar.setAttribute('aria-label', 'Favoritar');
+        btnFavoritar.innerHTML = `<img src="../assets/CoraçãoVazio.svg" alt="Favoritar" width="40" height="40">`;
+
+        // Verifica se já está favoritado
+        fetchComToken(`https://localhost:7252/api/Favoritos?idUsuario=${userId}`)
+          .then(res => res.json())
+          .then(data => {
+            const jaFavoritado = data.$values?.some(fav => fav.idFilme === filme.id);
+            btnFavoritar.querySelector('img').src = jaFavoritado ? '../assets/CoraçãoPrenchido.svg' : '../assets/CoraçãoVazio.svg';
+            btnFavoritar.setAttribute('data-favoritado', jaFavoritado ? 'true' : 'false');
+          });
+
+        // Evento de clique no botão de favoritar
+        btnFavoritar.onclick = function (e) {
+          e.stopPropagation(); // Evita abrir o modal ao clicar no botão
+          const favoritado = btnFavoritar.getAttribute('data-favoritado') === 'true';
+          if (!favoritado) {
+            fetchComToken('https://localhost:7252/api/Favoritos', {
+              method: 'POST',
+              body: JSON.stringify({
+                idUsuario: userId,
+                idFilme: filme.id
+              }),
+            }).then(res => {
+              if (res.ok) {
+                btnFavoritar.querySelector('img').src = '../assets/CoraçãoPrenchido.svg';
+                btnFavoritar.setAttribute('data-favoritado', 'true');
+              }
+            });
+          } else {
+            fetchComToken(`https://localhost:7252/api/Favoritos/${userId}/${filme.id}`, {
+              method: 'DELETE'
+            }).then(res => {
+              if (res.ok) {
+                btnFavoritar.querySelector('img').src = '../assets/CoraçãoVazio.svg';
+                btnFavoritar.setAttribute('data-favoritado', 'false');
+              }
+            });
+          }
+        };
+
+        imgContainer.appendChild(img);
+        imgContainer.appendChild(btnFavoritar);
+        div.appendChild(imgContainer);
+
+        grid.appendChild(div);
+      });
     })
     .catch(err => {
-      console.error('Erro ao adicionar aos favoritos:', err);
-      alert('Erro ao adicionar o filme aos favoritos.');
+      console.error('Erro ao buscar filmes:', err);
+      grid.innerHTML = '<p>Erro ao carregar filmes.</p>';
     });
 }
 
 // 🔽 Modal - funções no final do arquivo
 function abrirModal(filme) {
-    document.getElementById('modal-img').src = filme.fotoUrl && filme.fotoUrl.includes('/t/p/')
-        ? filme.fotoUrl
-        : 'https://via.placeholder.com/250x350';
-    document.getElementById('modal-titulo').textContent = filme.titulo;
-    document.getElementById('modal-ano').textContent = filme.anoLancamento;
-    document.getElementById('modal-genero').textContent = filme.genero;
-    document.getElementById('modal-sinopse').textContent = filme.sinopse;
-    document.getElementById('modal-nota').textContent = filme.notaMedia?.toFixed(1) || 'N/A';
-    document.getElementById('modal-estrelas').innerHTML = gerarEstrelas(filme.notaMedia);
+  verificarFavorito();
+  document.getElementById('modal-img').src = filme.fotoUrl && filme.fotoUrl.includes('/t/p/')
+    ? filme.fotoUrl
+    : 'https://via.placeholder.com/250x350';
+  document.getElementById('modal-titulo').textContent = filme.titulo;
+  document.getElementById('modal-ano').textContent = filme.anoLancamento;
+  document.getElementById('modal-genero').textContent = filme.genero;
+  document.getElementById('modal-sinopse').textContent = filme.sinopse;
+  document.getElementById('modal-nota').textContent = filme.notaMedia?.toFixed(1) || 'N/A';
+  document.getElementById('modal-estrelas').innerHTML = gerarEstrelas(filme.notaMedia);
 
+  // Função para verificar se o filme já está favoritado
+  function verificarFavorito() {
+    fetchComToken(`https://localhost:7252/api/Favoritos?idUsuario=${userId}`)
+      .then(res => res.json())
+      .then(data => {
+        // Supondo que data.$values é um array de favoritos
+        const jaFavoritado = data.$values?.some(fav => fav.idFilme === filme.id);
+        iconeFavorito.src = jaFavoritado ? '../assets/CoraçãoPrenchido.svg' : '../assets/CoraçãoVazio.svg';
+        btnFavoritar.setAttribute('data-favoritado', jaFavoritado ? 'true' : 'false');
+      });
+  }
 
-    // Adiciona o botão de coração ao modal
-    const btnFavorito = document.createElement('button');
-    btnFavorito.className = 'btn-favorito-modal';
-    btnFavorito.innerHTML = '❤️ Adicionar aos Favoritos';
-    btnFavorito.onclick = () => adicionarAosFavoritos(idFilme);
-
-    // Adiciona o botão ao modal
-    const modalFooter = document.getElementById('modal-favorito'); 
-    modalFooter.innerHTML = ''; // Limpa o conteúdo anterior
-    modalFooter.appendChild(btnFavorito);
-
-    document.getElementById('modal-filme').style.display = 'block';
-}
-
-function fecharModal() {
-    document.getElementById('modal-filme').style.display = 'none';
-}
-
-// Fazendo a requisição para o método GetAll da API
-const url = `https://localhost:7252/api/Comentarios?idUsuario=1`;
-fetchComToken(url, { method: 'GET' })
-  .then(res => {
-    if (!res.ok) {
-      throw new Error(`Erro ao carregar comentários: ${res.status}`);
-    }
-    return res.json();
-  })
-  .then(comentarios => {
-    const comentariosContainer = document.getElementById('modal-comentario');
-    if (Array.isArray(comentarios.$values) && comentarios.$values.length > 0) {
-      const ultimoComentario = comentarios.$values[comentarios.$values.length - 1]; // Obtém o último comentário
-      comentariosContainer.innerHTML = `<p>${ultimoComentario.comentario}</p>`;
+  // Evento de clique
+  btnFavoritar.onclick = function () {
+    const favoritado = btnFavoritar.getAttribute('data-favoritado') === 'true';
+    if (!favoritado) {
+      // POST para favoritar
+      fetchComToken('https://localhost:7252/api/Favoritos', {
+        method: 'POST',
+        body: JSON.stringify({
+          idUsuario: userId,
+          idFilme: filme.id
+        }),
+      }).then(res => {
+        if (res.ok) {
+          iconeFavorito.src = '../assets/CoraçãoPrenchido.svg';
+          btnFavoritar.setAttribute('data-favoritado', 'true');
+        }
+      });
     } else {
-      comentariosContainer.innerHTML = '<p>Sem comentários disponíveis.</p>';
+      // DELETE para desfavoritar
+      fetchComToken(`https://localhost:7252/api/Favoritos/${userId}/${filme.id}`, {
+        method: 'DELETE'
+      }).then(res => {
+        if (res.ok) {
+          iconeFavorito.src = '../assets/CoraçãoVazio.svg';
+          btnFavoritar.setAttribute('data-favoritado', 'false');
+          location.reload(); // Recarrega a página para atualizar a lista
+        }
+      });
     }
-  })
-  .catch(err => {
-    console.error('Erro ao carregar comentários:', err);
-    document.getElementById('modal-comentario').innerHTML = '<p>Erro ao carregar comentários.</p>';
-  });
+  };
+
+
+  document.getElementById('modal-filme').style.display = 'block';
+}
+function fecharModal() {
+  document.getElementById('modal-filme').style.display = 'none';
+}
 
 function gerarEstrelas(nota) {
-    if (!nota) return '';
-    const estrelasCheias = Math.round(nota / 2);
-    return Array.from({ length: 5 }, (_, i) => i < estrelasCheias ? '★' : '☆').join('');
+  if (!nota) return '';
+  const estrelasCheias = Math.round(nota / 2);
+  return Array.from({ length: 5 }, (_, i) => i < estrelasCheias ? '★' : '☆').join('');
 }
 
 document.getElementById('busca').addEventListener('keydown', function (e) {
-    if (e.key === 'Enter') {
-        buscarFilmes();
-    }
+  if (e.key === 'Enter') {
+    buscarFilmes();
+  }
 });
 
 function toggleMenu() {
-    const menu = document.getElementById("dropdown-menu");
-    menu.style.display = menu.style.display === "block" ? "none" : "block";
+  const menu = document.getElementById("dropdown-menu");
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
 }
 
 // Fecha o menu se clicar fora
 document.addEventListener("click", function (event) {
-    const userMenu = document.querySelector(".user-menu");
-    const dropdown = document.getElementById("dropdown-menu");
+  const userMenu = document.querySelector(".user-menu");
+  const dropdown = document.getElementById("dropdown-menu");
 
-    if (!userMenu.contains(event.target)) {
-        dropdown.style.display = "none";
-    }
+  if (!userMenu.contains(event.target)) {
+    dropdown.style.display = "none";
+  }
 });
 
 function fetchComToken(url, options = {}) {
-  const jwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Ikx1YW5hTGF1cmEiLCJuYW1laWQiOiIxIiwibmJmIjoxNzQ2OTg3NTI1LCJleHAiOjE3NDY5OTQ3MjUsImlhdCI6MTc0Njk4NzUyNX0.K8VzoR7OPJfSC--4oTJmem2eh1CCC_VlHS1CvkqFtjs";
-
-  // Adiciona o cabeçalho Authorization com o token
+  const jwtToken = localStorage.getItem('jwtToken');
   const headers = {
     'Authorization': `Bearer ${jwtToken}`,
     'Content-Type': 'application/json',
-    ...options.headers, // Permite sobrescrever ou adicionar outros cabeçalhos
+    ...options.headers,
   };
-
   return fetch(url, { ...options, headers });
 }
+
+document.getElementById('logout-link').addEventListener('click', function (e) {
+  e.preventDefault();
+  localStorage.removeItem('jwtToken');
+  window.location.href = "login-usuario.html";
+});

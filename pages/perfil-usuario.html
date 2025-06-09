@@ -12,13 +12,13 @@
 
 <body>
   <header>
-<div class="logo">
-  <a href="../index.html">
-    <img src="../assets/Logo.svg" alt="Logo">
-  </a>
-</div>
+    <div class="logo">
+      <a href="../index.html">
+        <img src="../assets/Logo.svg" alt="Logo">
+      </a>
+    </div>
     <nav>
-      <a href="../index.html" class="active">Início</a>
+      <a href="../index.html">Início</a>
       <a href="filmesporgenero.html">Filmes Por Gênero</a>
       <a href="melhoresavaliados.html">Melhores Avaliados</a>
     </nav>
@@ -27,9 +27,9 @@
         <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="Perfil">
       </div>
       <div class="user-dropdown" id="dropdown-menu">
-        <a href="perfil-usuario.html">Perfil</a>
+        <a href="perfil-usuario.html" class="active">Perfil</a>
         <a href="comentarios.html">Avaliações</a>
-        <a href="favoritadas.html">Favoritados</a>
+        <a href="favoritadas.html">Favoritadas</a>
         <a href="login-usuario.html">Desconectar</a>
       </div>
     </div>
@@ -39,8 +39,7 @@
   <main class="perfil-container">
     <aside class="perfil-lateral">
       <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="Foto do usuário">
-      <span>@UserName (Id)</span>
-      <button id="alterar-dados">Alterar dados</button>
+      <h3 id="nomeUsuario" class="nomeUsuario"></h3>
       <button id="excluir-conta">Excluir Conta</button>
     </aside>
 
@@ -52,21 +51,23 @@
         <label for="email">E-mail</label>
         <input type="email" id="email" name="email" />
       </form>
+      <button id="alterar-dados">Salvar Alterações</button>
 
-      <div class="filmes-secoes">
-        <div>
-          <h2>Filmes Favoritados</h2>
-          <div id="favoritos" class="grid"></div>
+      <div class="obras-container">
+        <div class="header">
+          <h2>Obras Favoritadas</h2>
+          <div id="favoritos" class="grid" style="cursor:pointer"></div>
         </div>
-        <div>
-          <h2>Filmes Avaliados</h2>
-          <div id="avaliacoes" class="grid"></div>
+        <div class="header">
+          <h2>Obras Avaliadas</h2>
+          <div id="avaliacoes" class="grid" style="cursor:pointer"></div>
         </div>
       </div>
     </section>
   </main>
 
   <script src="../js/perfil-usuario.js"></script>
+
 </body>
 
 </html>

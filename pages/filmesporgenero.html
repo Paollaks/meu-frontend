@@ -13,11 +13,11 @@
 <body>
 
   <header>
-<div class="logo">
-  <a href="../index.html">
-    <img src="../assets/Logo.svg" alt="Logo">
-  </a>
-</div>
+    <div class="logo">
+      <a href="../index.html">
+        <img src="../assets/Logo.svg" alt="Logo">
+      </a>
+    </div>
     <nav>
       <a href="../index.html">Início</a>
       <a href="filmesporgenero.html" class="active">Filmes Por Gênero</a>
@@ -28,10 +28,10 @@
         <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="Perfil">
       </div>
       <div class="user-dropdown" id="dropdown-menu">
-        <a href="perfil-usuario.html">Perfil</a>
+        <a href="perfil-usuario.html" id="perfil-link">Perfil</a>
         <a href="comentarios.html">Avaliações</a>
-        <a href="favoritadas.html">Favoritados</a>
-        <a href="login-usuario.html">Desconectar</a>
+        <a href="favoritadas.html">Favoritadas</a>
+        <a href="login-usuario.html" id="logout-link">Desconectar</a>
       </div>
     </div>
   </header>
@@ -124,17 +124,27 @@
     <div class="modal-content">
       <span class="close" onclick="fecharModal()">&times;</span>
       <div class="modal-body">
-        <img id="modal-img" src="" alt="Capa do Filme">
+        <div class="modal-img-col" style="position: relative;">
+          <img id="modal-img" src="" alt="Capa do Filme">
+          <button id="btn-favoritar" aria-label="Favoritar" class="btn-favoritar">
+            <img id="icone-favorito" src="assets/CoraçãoVazio.svg" alt="Favoritar">
+          </button>
+          <p>
+            <strong id="nota">Nota média:</strong>
+            <span id="modal-estrelas" class="estrelas"></span>
+            <span id="modal-nota"></span>
+          </p>
+        </div>
         <div class="modal-info">
           <h2 id="modal-titulo"></h2>
           <p><strong>Ano de Lançamento:</strong> <span id="modal-ano"></span></p>
           <p><strong>Gênero:</strong> <span id="modal-genero"></span></p>
           <p><strong>Sinopse:</strong> <span id="modal-sinopse"></span></p>
-          <p>
-            <strong>Nota média:</strong>
-            <span id="modal-nota"></span>
-            <span id="modal-estrelas" class="estrelas"></span>
-          </p>
+          <div id="novo-comentario-container">
+            <p><strong>O que você acha dessa Obra?</strong></p>
+            <input type="text" id="novo-comentario-input" placeholder="Escreva seu comentário..." />
+            <button id="btn-enviar-comentario">Salvar avaliação</button>
+          </div>
         </div>
       </div>
     </div>
